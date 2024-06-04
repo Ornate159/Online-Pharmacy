@@ -1,38 +1,29 @@
 {% extends 'shop/style.html' %}
-{% block title %} Checkout {% endblock %}
-{% block body%}
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
-
-<div class="container contact-form">
-            <div class="contact-image">
-                <img src="https://image.ibb.co/kUagtU/rocket_contact.png" alt="rocket_contact"/>
+{% block title %} Contact Us {% endblock %}
+{% block body %}
+<main style="background-color: #f9f9f9; padding: 50px 0;">
+    <div class="container">
+        <h1 style="color: #2ec4b6; border-bottom: 3px solid #17a2b8; padding-bottom: 10px; margin-bottom: 20px; text-align: center;">Contact Us</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6 mb-4">
+                <h2 style="color: #2ec4b6; border-bottom: 2px solid #17a2b8; padding-bottom: 10px; margin-bottom: 20px; text-align: center;">Send Us a Message</h2>
+                <form>
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" class="form-control" id="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea class="form-control" id="message" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
             </div>
-            <form method="post">
-                <h3>Drop Us a Message</h3>
-               <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input type="text" name="txtName" class="form-control" placeholder="Your Name *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="txtEmail" class="form-control" placeholder="Your Email *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="txtPhone" class="form-control" placeholder="Your Phone Number *" value="" />
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" name="btnSubmit" class="btnContact" value="Send Message" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <textarea name="txtMsg" class="form-control" placeholder="Your Message *" style="width: 100%; height: 150px;"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </form>
-</div>
+        </div>
+    </div>
+</main>
 {% endblock %}

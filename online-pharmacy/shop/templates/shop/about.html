@@ -1,95 +1,53 @@
 {% extends 'shop/style.html' %}
+{% load static %}
 
-{% block title %} About Us {% endblock %}
+{% block page_title %}About Us{% endblock %}
 {% block body %}
 
+<main style="background-color: #f9f9f9; padding: 50px 0;">
+    <div class="container">
+        <h1 style="color: #2ec4b6; border-bottom: 3px solid #17a2b8; padding-bottom: 10px; margin-bottom: 20px; text-align: center;">Who We Are</h1>
+        <p style="font-size: 1.2em; color: #2c3e50; text-align: center; margin-bottom: 40px;">Welcome to <strong>MedixConnect</strong>, your trusted online pharmacy. Our mission is to provide high-quality pharmaceutical products and exceptional customer service to ensure your health and well-being.</p>
+        
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h2 style="color: #2ec4b6; border-bottom: 2px solid #17a2b8; padding-bottom: 10px; margin-bottom: 20px;">Our Mission</h2>
+                <p>At <strong>MedixConnect</strong>, we are committed to improving the health and lives of our customers by offering a wide range of prescription medications, over-the-counter drugs, and healthcare products. Our goal is to make healthcare more accessible, affordable, and convenient for everyone.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h2 style="color: #2ec4b6; border-bottom: 2px solid #17a2b8; padding-bottom: 10px; margin-bottom: 20px;">Our Values</h2>
+                <ul style="padding-left: 20px; color: #2c3e50;">
+                    <li><strong>Quality:</strong> We offer only the highest quality products from trusted manufacturers and suppliers.</li>
+                    <li><strong>Integrity:</strong> We operate with honesty and transparency in all our interactions and business practices.</li>
+                    <li><strong>Customer Service:</strong> Our customer support team is dedicated to providing you with exceptional service and assistance.</li>
+                    <li><strong>Accessibility:</strong> We strive to make healthcare products available to everyone, regardless of location or financial situation.</li>
+                </ul>
+            </div>
+        </div>
 
+        <div class="row mt-4">
+            <div class="col-md-6 mb-4">
+                <h2 style="color: #2ec4b6; border-bottom: 2px solid #17a2b8; padding-bottom: 10px; margin-bottom: 20px;">Our Team</h2>
+                <p>Our team consists of licensed pharmacists, healthcare professionals, and customer service experts who are passionate about your health. We work tirelessly to ensure that you receive the best care and advice possible.</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h2 style="color: #2ec4b6; border-bottom: 2px solid #17a2b8; padding-bottom: 10px; margin-bottom: 20px;">Why Choose Us?</h2>
+                <ul style="padding-left: 20px; color: #2c3e50;">
+                    <li>Wide range of products: From prescription medications to vitamins and supplements, we have everything you need in one place.</li>
+                    <li>Convenience: Order your medications online and have them delivered to your doorstep quickly and discreetly.</li>
+                    <li>Competitive prices: We offer affordable prices and frequent discounts to help you save on your healthcare needs.</li>
+                    <li>Secure shopping: Our website uses advanced security measures to protect your personal information and ensure a safe shopping experience.</li>
+                </ul>
+            </div>
+        </div>
 
-<main>
-
-  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <div class="text-center mt-5">
+            <h2 style="color: #2ec4b6; border-bottom: 2px solid #17a2b8; padding-bottom: 10px; margin-bottom: 20px;">Contact Us</h2>
+            <p style="color: #2c3e50; margin-bottom: 20px;">If you have any questions or need assistance, please do not hesitate to contact us. Our friendly customer service team is here to help you.</p>
+            <p style="color: #2ec4b6; margin-bottom: 10px;">Email: <a href="mailto:support@[yourpharmacyname].com" style="color: #17a2b8;">support@medixconnect.com</a></p>
+            <p style="color: #2c3e50;">Phone: 880*********</p>
+        </div>
     </div>
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
-        <div class="container">
-          <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p>Online Pharmacy</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
-        <div class="container">
-          <div class="carousel-caption">
-            <h1>Another example headline.</h1>
-            <p>Some representative placeholder content for the second slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
-        <div class="container">
-          <div class="carousel-caption text-end">
-            <h1></h1>
-            <p>gg</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-
-
-  <!-- Marketing messaging and featurettes
-  ================================================== -->
-  <!-- Wrap the rest of the page in another container to center all the content. -->
-
-  <div class="container marketing">
-
-    <!-- Three columns of text below the carousel -->
-    <div class="row">
-      <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
-        <h2 class="fw-normal">On-call Doctor</h2>
-        <p>Our expert and experienced pool of doctors are always ready to serve any callers with their problems. Patients can communicate in our social media platforms and take an appointment or directly take the service from the app. Our Online Doctor Consultant communicated and prescribes all patients accordingly and provides the Best Telemedicine Services as well.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
-        <h2 class="fw-normal">e-Diagnosis</h2>
-        <p>"Online Pharmacy" provides the Best Online Diagnosis. Patients can get all tests done from the comfort of their home. osudpotro brings the fastest response and quickest Test Sample Collection process possible. User can choose from a list of lab tests, get samples collected from home, get their results via email or app and also get free Online Doctor Consultancy. We provide the Best Digital Diagnosis all over Dhaka.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-      <div class="col-lg-4">
-        <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
-
-        <h2 class="fw-normal">Dedicated Call Center</h2>
-        <p>Our Call Center is operated by Experienced Teleconsultants and are always there to serve all customers at all times.</p>
-        <p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
-      </div><!-- /.col-lg-4 -->
-    </div><!-- /.row -->
-  </div>
-
 </main>
+
 {% endblock %}
