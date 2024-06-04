@@ -15,7 +15,6 @@
             background-color: blue;
         }
 
-        }
         body .carousel-indicators{
         bottom:0;
         }
@@ -33,20 +32,20 @@
         }
 
         .carousel-control-prev-icon {
-            filter: invert(28%) sepia(18%) saturate(374%) hue-rotate(161deg) brightness(95%) contrast(89%);
+            filter: invert(28%) sepia(60%) saturate(374%) hue-rotate(161deg) brightness(95%) contrast(89%);
             background-color: transparent;
-            transform: scale(2); 
+            transform: scale(2.2); 
         }
 
         .carousel-control-next-icon {
-            filter: invert(28%) sepia(18%) saturate(374%) hue-rotate(161deg) brightness(95%) contrast(89%);
+            filter: invert(28%) sepia(60%) saturate(374%) hue-rotate(161deg) brightness(95%) contrast(89%);
             background-color: transparent;
-            transform: scale(2); 
+            transform: scale(2.2);
         }
 
 
         .carousel-indicators .active{
-        background-color: blue;
+            background-color: #2ec4b6;
         }
 
 
@@ -55,18 +54,19 @@
 
 {% block body%}
 {% load static %}
+
 <div style="width: full; background-color: #f9f9f9;">
     <div class="container" > <!--slide start-->
         {% for product,range,slideN in listAll %}
-        <h2 style="padding: 10px; margin-bottom: 20px; text-align: left; color: #2c3e50; box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); ">{{product.0.category}}</h2>
+        <h2 style="padding: 10px; padding-left: 20px; margin-bottom: 20px; border-radius: 4px; text-align: left; background-color: #bbe4e0; color: #084942; box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); ">{{product.0.category}}</h2>
         <div Class="row" style="padding-bottom: 20px;">
     <div id="demo{{forloop.counter}}" class=" col carousel slide my-3" data-ride="carousel">
-        <ul class="carousel-indicators">
+        <!-- <ul class="carousel-indicators">
         <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
             {% for i in range %}
         <li data-target="#demo{{forloop.parentloop.counter}}"data-slide-to="{{i}}" ></li>
             {% endfor %}
-        </ul>
+        </ul> -->
 
             <div class="container carousel-inner no-padding">
                 <div class="carousel-item active">
@@ -74,15 +74,15 @@
 
                     {% for i in product %}
                         <div class="col-xs-3 col-sm-3 col-md-3">
-                            <div class="card align-items-center" style="width: 18rem;">
-                                <img src='/media/{{i.image}}' class="card-img-top" alt="...">
+                            <div class="card align-items-center" style="width: 16.5rem;margin: 2px; border: 1px solid #f9f9f991; border-radius: 5px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); " >
+                                <img src='/media/{{i.image}}' class="card-img-top" alt="product" style="width: 15rem; height: 18rem; object-fit: contain; border: 1px solid rgb(226, 224, 224); border-radius: 4px; margin-top: 4px;">
                                 <div class="card-body">
-                                    <h5 class="card-title" id="namepr{{i.id}}">{{i.product_name}}</h5>
+                                    <h4 class="card-title" style="color:#2c3e50; font-size: 22px; font-weight: 500;" id="namepr{{i.id}}">{{i.product_name}}</h4>
                                     <p class="card-text"><b>Price: {{i.price}}</b></p>
                                     <span id="divpr{{i.id}}" class="divpr">
-                                        <button id="pr{{i.id}}" class="btn btn-primary cart">Add To Cart</button>
+                                        <button id="pr{{i.id}}" class="btn btn-primary cart" style="width: 6.5rem; font-size: 15px; font-weight:lighter;">Add To Cart</button>
                                     </span>
-                                    <a href="/shop/product/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart">View Product</button></a>
+                                    <a href="/shop/product/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart" style="width: 7rem; font-size: 15px; font-weight: lighter;">View Product</button></a>
                                 </div>
                             </div>
                         </div>
@@ -108,11 +108,14 @@
 
     </div>
 </div>
-    {% endblock %}
+{% endblock %}
+
+
 
 # For cart System
 {% block javascript %}
 <script>
+    
 // Find out the cart items from localStorage
 if (localStorage.getItem('cart') == null) {
     var cart = {};
