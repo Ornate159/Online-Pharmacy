@@ -8,7 +8,6 @@ from .forms import CreateUserForm, ProductForm
 from .models import Product, UserProfile
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
 
@@ -110,47 +109,26 @@ def product(request, id):
 def checkout(request):
     return render(request, 'shop/checkout.html')
 
-def prescribed(request):
-    products = Product.objects.all()
-    listAll = []
-    listCat = Product.objects.values('category', 'id')
-    allCat = {item['category'] for item in listCat}
-    for cat in allCat:
-        item = Product.objects.filter(category='Prescribed Medicines')
-        x = len(products)
-        slideN = x // 4 + ceil((x / 4 - (x // 4)))
-
-    all = {'listAll': listAll}
-    listAll.append([item, range(1, slideN), slideN])
-    return render(request, 'shop/prescribed.html', all)
-
+@login_required
 def otc(request):
-    products = Product.objects.all()
-    listAll = []
-    listCat = Product.objects.values('category', 'id')
-    allCat = {item['category'] for item in listCat}
-    for cat in allCat:
-        item = Product.objects.filter(category='OTC Medicines')
-        x = len(products)
-        slideN = x // 4 + ceil((x / 4 - (x // 4)))
+    # Fetch products under the 'OTC Medicines' category
+    products = Product.objects.filter(category='OTC Medicines')
+    context = {'products': products}
+    return render(request, 'shop/otc.html', context)
 
-    all = {'listAll': listAll}
-    listAll.append([item, range(1, slideN), slideN])
-    return render(request, 'shop/prescribed.html', all)
+@login_required
+def prescribed(request):
+    # Fetch products under the 'Prescribed Medicines' category
+    products = Product.objects.filter(category='Prescribed Medicines')
+    context = {'products': products}
+    return render(request, 'shop/prescribed.html', context)
 
+@login_required
 def healthcare(request):
-    products = Product.objects.all()
-    listAll = []
-    listCat = Product.objects.values('category', 'id')
-    allCat = {item['category'] for item in listCat}
-    for cat in allCat:
-        item = Product.objects.filter(category='Healthcare Products')
-        x = len(products)
-        slideN = x // 4 + ceil((x / 4 - (x // 4)))
-
-    all = {'listAll': listAll}
-    listAll.append([item, range(1, slideN), slideN])
-    return render(request, 'shop/prescribed.html', all)
+    # Fetch products under the 'Healthcare Products' category
+    products = Product.objects.filter(category='Healthcare Products')
+    context = {'products': products}
+    return render(request, 'shop/healthcare.html', context)
 
 def pharmacist(request):
     if request.method == 'POST':
