@@ -19,12 +19,12 @@
             </div>
         </div>
         <div class="col-md-6 border rounded p-4" style="height: 25rem;">
-            <h2 class="font-weight-bold mb-4">{{product.product_name}}</h2>
+            <h2 id="name{{ product.id }}">{{ product.product_name }}</h2>
             <p class="h5 text-danger mb-3"><b>Price: {{product.price}} BDT</b></p>
             <p class="lead">{{product.desc}}</p>
             <div style="display: flex; gap: 2rem;justify-content: flex-start; padding-top: 2rem;">
                 <span id="divpr{{product.id}}" class="divpr">
-                    <button id="pr{{product.id}}" class="btn btn-primary cart" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
+                    <button id="pr{{product.id}}" class="btn btn-primary cart" data-category="{{ product.0.category }}" data-price="{{ product.price }}" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
                 </span>
                 <span class="divpr">
                     <a href="/shop" class="btn btn-primary cart" style="width: 10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
@@ -36,17 +36,29 @@
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLR8d2omExLg4e6l20Yw3vR5/tXYc2kjp/rG/taxB5" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+
+{% endblock %}
+
+
+{% block javascript %}
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
     console.log('working');
 
+    // Check if cart exists in localStorage
+    var cart;
     if(localStorage.getItem('cart') === null){
-        var cart = {};
+        cart = {};
     } else {
         cart = JSON.parse(localStorage.getItem('cart'));
-        document.getElementById('cart').innerHTML = Object.keys(cart).length;
+        // Check if element with ID "cart" exists before accessing its innerHTML property
+        var cartElement = document.getElementById('cart');
+        if (cartElement !== null) {
+            cartElement.innerHTML = Object.keys(cart).length;
+        }
     }
 
     $('.cart').click(function(){
@@ -61,11 +73,17 @@ $(document).ready(function() {
 
         console.log(cart);
         localStorage.setItem('cart', JSON.stringify(cart));
-        document.getElementById('cart').innerHTML = Object.keys(cart).length;
+        // Check if element with ID "cart" exists before accessing its innerHTML property
+        var cartElement = document.getElementById('cart');
+        if (cartElement !== null) {
+            cartElement.innerHTML = Object.keys(cart).length;
+        }
     });
 
     $('#popcart').popover();
     document.getElementById('popcart').setAttribute('data-content','<h5>Added Medicine Items</h5>');
 });
+
 </script>
+
 {% endblock %}
