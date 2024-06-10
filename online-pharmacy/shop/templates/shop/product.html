@@ -26,7 +26,11 @@
             <p class="lead">{{ product.desc }}</p>
             <div style="display: flex; gap: 2rem; justify-content: flex-start; padding-top: 2rem;">
                 <span id="divpr{{ product.id }}" class="divpr">
-                    <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="{{ product.category }}" data-price="{{ product.price }}" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
+                    {% if user.is_authenticated %}
+                        <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="{{ product.category }}" data-price="{{ product.price }}" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
+                    {% else %}
+                        <a href="/shop/login/"><button class="btn btn-primary" style="width:10rem; font-size: 20px; font-weight:lighter;">Order Now</button></a>
+                    {% endif %}
                 </span>
                 <span class="divpr">
                     <a href="/shop" class="btn btn-primary" style="width: 10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
