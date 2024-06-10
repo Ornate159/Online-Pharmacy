@@ -10,7 +10,7 @@ from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
-
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 
@@ -105,10 +105,6 @@ def search(request):
     else:
         return render(request, 'shop/search.html', all)
 
-def product(request, id):
-    product = Product.objects.filter(id=id)
-    return render(request, 'shop/product.html', {'product': product[0]})
-
 def checkout(request):
     return render(request, 'shop/checkout.html')
 
@@ -145,3 +141,9 @@ def pharmacist(request):
     else:
         form = ProductForm()
     return render(request, 'shop/pharmacist.html', {'form': form})
+
+
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    return render(request, 'shop/product.html', {'product': product})

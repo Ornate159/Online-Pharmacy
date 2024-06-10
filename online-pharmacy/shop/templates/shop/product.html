@@ -1,71 +1,135 @@
 {% extends 'shop/style.html' %}
 
-{% block title %} {{product.product_name}} {% endblock %}
+{% block title %} {{ product.product_name }} {% endblock %}
+
 {% block css %}
-        body{
-            background-color: #f9f9f9;
-        }
-    {% endblock %}
+<style>
+    body {
+        background-color: #f9f9f9;
+    }
+</style>
+{% endblock %}
+
 {% block body %}
-
-
-<div class="container my-4" >
-    <div class="row" >
-        <div class="col-md-5" >
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-5">
             <div class="row">
                 <div class="col">
-                    <img src="/media/{{product.image}}" style="height: 25rem; width: auto;" class="img-fluid rounded shadow" alt="{{product.product_name}}">
+                    <img src="/media/{{ product.image }}" style="height: 25rem; width: auto;" class="img-fluid rounded shadow" alt="{{ product.product_name }}">
                 </div>
             </div>
         </div>
         <div class="col-md-6 border rounded p-4" style="height: 25rem;">
-            <h2 class="font-weight-bold mb-4">{{product.product_name}}</h2>
-            <p class="h5 text-danger mb-3"><b>Price: {{product.price}} BDT</b></p>
-            <p class="lead">{{product.desc}}</p>
-            <div style="display: flex; gap: 2rem;justify-content: flex-start; padding-top: 2rem;">
-                <span id="divpr{{product.id}}" class="divpr">
-                    <button id="pr{{product.id}}" class="btn btn-primary cart" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
+            <h2 class="font-weight-bold mb-4" id="namepr{{ product.id }}">{{ product.product_name }}</h2>
+            <p class="h5 text-danger mb-3"><b>Price: {{ product.price }} BDT</b></p>
+            <p class="lead">{{ product.desc }}</p>
+            <div style="display: flex; gap: 2rem; justify-content: flex-start; padding-top: 2rem;">
+                <span id="divpr{{ product.id }}" class="divpr">
+                    <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="{{ product.category }}" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
                 </span>
                 <span class="divpr">
-                    <a href="/shop" class="btn btn-primary cart" style="width: 10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
+                    <a href="/shop" class="btn btn-primary" style="width: 10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
                 </span>
-                
             </div>
         </div>     
-        
     </div>
 </div>
+{% endblock %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLR8d2omExLg4e6l20Yw3vR5/tXYc2kjp/rG/taxB5" crossorigin="anonymous"></script>
-
+{% block javascript %}
 <script>
-$(document).ready(function() {
-    console.log('working');
-
-    if(localStorage.getItem('cart') === null){
+    if (localStorage.getItem('cart') == null) {
         var cart = {};
     } else {
         cart = JSON.parse(localStorage.getItem('cart'));
-        document.getElementById('cart').innerHTML = Object.keys(cart).length;
+        updateCart(cart);
     }
 
-    $('.cart').click(function(){
-        console.log('clicked');
+    $('.divpr').on('click', 'button.cart', function() {
         var idstr = this.id.toString();
-        console.log(idstr);
-        if(cart[idstr] != undefined){
-            cart[idstr] = cart[idstr] + 1;
-        } else {
-            cart[idstr] = 1;
-        }
+        var category = this.getAttribute('data-category');
+        var nameElement = document.getElementById('namepr' + idstr.slice(2));
 
-        console.log(cart);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        document.getElementById('cart').innerHTML = Object.keys(cart).length;
+        if (cart[idstr] != undefined) {
+            cart[idstr][0] += 1;
+        } else {
+            var name = nameElement ? nameElement.innerHTML : "{{ product.product_name }}";
+            cart[idstr] = [1, name, category];
+        }
+        updateCart(cart);
     });
 
     $('#popcart').popover();
-    document.getElementById('popcart').setAttribute('data-content','<h5>Added Medicine Items</h5>');
-});
+    updatePopover(cart);
+
+    function updatePopover(cart) {
+        var popStr = "<h5> Cart for your items in my shopping cart </h5><div class='mx-2 my-2'>";
+        var i = 1;
+        for (var item in cart) {
+            var itemName = document.getElementById('namepr' + item.slice(2)) ? document.getElementById('namepr' + item.slice(2)).innerHTML.slice(0, 19) : cart[item][1].slice(0, 19);
+            popStr += "<b>" + i + "</b>. " + itemName + "... Qty: " + cart[item][0] + " (Category: " + cart[item][2] + ")<br>";
+            i++;
+        }
+        popStr += "</div> <a href='/shop/checkout'><button class='btn btn-primary' id='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCartAndClosePopover()' id='clearCart'>Clear Cart</button>";
+        document.getElementById('popcart').setAttribute('data-content', popStr);
+    }
+
+    function clearCartAndClosePopover() {
+        clearCart();
+        $('#popcart').popover('hide');
+    }
+
+    function clearCart() {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        for (var item in cart) {
+            var divElement = document.getElementById('divpr' + item.slice(2));
+            if (divElement) {
+                divElement.innerHTML = '<button id="pr' + item.slice(2) + '" class="btn btn-primary cart" data-category="' + cart[item][2] + '">Add To Cart</button>';
+            }
+        }
+        localStorage.clear();
+        cart = {};
+        updateCart(cart);
+    }
+
+    function updateCart(cart) {
+        var sum = 0;
+        for (var item in cart) {
+            sum += cart[item][0];
+            if (document.getElementById('divpr' + item.slice(2))) {
+                document.getElementById('divpr' + item.slice(2)).innerHTML = "<button id='minuspr" + item.slice(2) + "' class='btn btn-primary minus' data-category='" + cart[item][2] + "'>-</button> <span id='valpr" + item.slice(2) + "'>" + cart[item][0] + "</span> <button id='pluspr" + item.slice(2) + "' class='btn btn-primary plus' data-category='" + cart[item][2] + "'> + </button>";
+            }
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+        document.getElementById('cart').innerHTML = sum;
+        updatePopover(cart);
+    }
+
+    $('.divpr').on("click", "button.minus", function() {
+        var id = this.id.slice(7);
+        cart['pr' + id][0] = cart['pr' + id][0] - 1;
+        if (cart['pr' + id][0] <= 0) {
+            delete cart['pr' + id];
+        } else {
+            cart['pr' + id][0] = Math.max(0, cart['pr' + id][0]);
+            document.getElementById('valpr' + id).innerHTML = cart['pr' + id][0];
+        }
+        updateCart(cart);
+    });
+
+    $('.divpr').on("click", "button.plus", function() {
+        var id = this.id.slice(6);
+        cart['pr' + id][0] = cart['pr' + id][0] + 1;
+        document.getElementById('valpr' + id).innerHTML = cart['pr' + id][0];
+        updateCart(cart);
+    });
+
+    $(document).on('click', function(e) {
+        var target = $(e.target);
+        if (!target.is('#popcart') && !target.closest('.popover').length) {
+            $('#popcart').popover('hide');
+        }
+    });
 </script>
 {% endblock %}
