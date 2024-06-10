@@ -10,12 +10,12 @@
             <div class="card align-items-center" style="width: 16.5rem; margin: 10px; border: 1px solid #f9f9f991; border-radius: 5px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);">
                 <img src='/media/{{ product.image }}' class="card-img-top" alt="product" style="width: 15rem; height: 18rem; object-fit: contain; border: 1px solid rgb(226, 224, 224); border-radius: 4px; margin-top: 4px;">
                 <div class="card-body">
-                    <h4 class="card-title" style="color: #2c3e50; font-size: 22px; font-weight: 500;" id="namepr{{ product.id }}">{{ product.product_name }}</h4>
+                    <h4 class="card-title" style="color: #2c3e50; font-size: 22px; font-weight: 500;" id="namehc{{ product.id }}">{{ product.product_name }}</h4>
                     <p class="card-text"><b>Price: {{ product.price }}</b></p>
-                    <span id="divpr{{ product.id }}" class="divpr">
-                        <button id="pr{{ product.id }}" class="btn btn-primary cart" style="width: 6.8rem; font-size: 14.5px; font-weight:lighter;">Add To Cart</button>
+                    <span id="divhc{{ product.id }}" class="divpr">
+                        <button id="hc{{ product.id }}" class="btn btn-primary cart" data-category="Healthcare" style="width: 6.8rem; font-size: 14.5px; font-weight:lighter;">Add To Cart</button>
                     </span>
-                    <a href="/shop/product/{{ product.id }}"><button id="qv{{ product.id }}" class="btn btn-primary cart" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</button></a>
+                    <a href="/shop/product/{{ product.id }}"><button id="qv{{ product.id }}" class="btn btn-primary cart" data-category="Healthcare" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</button></a>
                 </div>
             </div>
         </div>
