@@ -242,12 +242,13 @@
                             $('.divpr').on('click', 'button.cart', function() {
                                 var idstr = this.id.toString();
                                 var category = this.getAttribute('data-category');
+                                var price = parseFloat(this.getAttribute('data-price'));
                                 if (cart[idstr] != undefined) {
                                     qty = cart[idstr][0] + 1;
                                 } else {
                                     qty = 1;
                                     name = document.getElementById('name' + idstr).innerHTML;
-                                    cart[idstr] = [qty, name, category];
+                                    cart[idstr] = [qty, name, category,price];
                                 }
                                 updateCart(cart);
                             });
