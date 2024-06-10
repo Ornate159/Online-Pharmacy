@@ -13,9 +13,9 @@
                     <h4 class="card-title" style="color: #2c3e50; font-size: 22px; font-weight: 500;" id="namepr{{ product.id }}">{{ product.product_name }}</h4>
                     <p class="card-text"><b>Price: {{ product.price }}</b></p>
                     <span id="divpr{{ product.id }}" class="divpr">
-                        <button id="pr{{ product.id }}" class="btn btn-primary cart" style="width: 6.8rem; font-size: 14.5px; font-weight:lighter;">Add To Cart</button>
+                        <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="prescribed" style="width: 6.8rem; font-size: 14.5px; font-weight:lighter;">Add To Cart</button>
                     </span>
-                    <a href="/shop/product/{{ product.id }}"><button id="qv{{ product.id }}" class="btn btn-primary cart" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</button></a>
+                    <a href="/shop/product/{{ product.id }}"><button id="qv{{ product.id }}" class="btn btn-primary cart" data-category="prescribed" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</button></a>
                 </div>
             </div>
         </div>

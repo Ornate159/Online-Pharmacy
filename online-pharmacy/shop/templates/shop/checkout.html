@@ -116,7 +116,7 @@ const checkoutButton = document.getElementById('checkoutButton');
 console.log(cart)
 var sum=0;
 if ($.isEmptyObject(cart)){
-    mystr=`<p>Your cart is empty. Please add some items first!</p>>`
+    mystr=`<p>Your cart is empty. Please add some items first!</p>`
     $('#items').append(mystr);
 }
 for(item in cart){
