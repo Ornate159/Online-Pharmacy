@@ -1,22 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import Product, UserProfile
 from django.contrib import messages
 from math import ceil
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm, ProductForm
-from .models import Product, UserProfile
-from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
-from django.shortcuts import render, get_object_or_404
-from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
-
-# Create your views here.
-
-from django.shortcuts import redirect
 
 def Login(request):
     if request.user.is_authenticated:
@@ -50,16 +42,15 @@ def signup(request):
     context = {'form': form}
     return render(request, 'shop/signup.html', context)
 
-@login_required
 def index(request):
-    try:
-        user_profile = UserProfile.objects.get(user=request.user)
-        role = user_profile.role
-    except ObjectDoesNotExist:
-        # Handle the case where the user profile doesn't exist
-        role = None
+    role = None
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            role = user_profile.role
+        except ObjectDoesNotExist:
+            pass
     
-    # Your existing code
     products = Product.objects.all()
     listAll = []
     listCat = Product.objects.values('category', 'id')
@@ -70,7 +61,7 @@ def index(request):
         slideN = x // 4 + ceil((x / 4 - (x // 4)))
         listAll.append([item, range(1, slideN), slideN])
 
-    context = {'listAll': listAll, 'role': role}
+    context = {'listAll': listAll, 'role': role, 'is_authenticated': request.user.is_authenticated}
     return render(request, 'shop/index.html', context)
 
 def Logout(request):
@@ -84,7 +75,7 @@ def contact(request):
     return render(request, 'shop/contact.html')
 
 def payment(request):
-    return render(request, 'shop/payment.html' )
+    return render(request, 'shop/payment.html')
 
 def search(request):
     products = Product.objects.all()
@@ -108,23 +99,17 @@ def search(request):
 def checkout(request):
     return render(request, 'shop/checkout.html')
 
-@login_required
 def otc(request):
-    # Fetch products under the 'OTC Medicines' category
     products = Product.objects.filter(category='OTC Medicines')
     context = {'products': products}
     return render(request, 'shop/otc.html', context)
 
-@login_required
 def prescribed(request):
-    # Fetch products under the 'Prescribed Medicines' category
     products = Product.objects.filter(category='Prescribed Medicines')
     context = {'products': products}
     return render(request, 'shop/prescribed.html', context)
 
-@login_required
 def healthcare(request):
-    # Fetch products under the 'Healthcare Products' category
     products = Product.objects.filter(category='Healthcare Products')
     context = {'products': products}
     return render(request, 'shop/healthcare.html', context)
@@ -141,8 +126,6 @@ def pharmacist(request):
     else:
         form = ProductForm()
     return render(request, 'shop/pharmacist.html', {'form': form})
-
-
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
