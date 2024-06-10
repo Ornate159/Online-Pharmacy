@@ -26,7 +26,7 @@
             <p class="lead">{{ product.desc }}</p>
             <div style="display: flex; gap: 2rem; justify-content: flex-start; padding-top: 2rem;">
                 <span id="divpr{{ product.id }}" class="divpr">
-                    <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="{{ product.category }}" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
+                    <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="{{ product.category }}" data-price="{{ product.price }}" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
                 </span>
                 <span class="divpr">
                     <a href="/shop" class="btn btn-primary" style="width: 10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
@@ -50,12 +50,12 @@
         var idstr = this.id.toString();
         var category = this.getAttribute('data-category');
         var nameElement = document.getElementById('namepr' + idstr.slice(2));
-
+        var price = parseFloat(this.getAttribute('data-price'));
         if (cart[idstr] != undefined) {
             cart[idstr][0] += 1;
         } else {
             var name = nameElement ? nameElement.innerHTML : "{{ product.product_name }}";
-            cart[idstr] = [1, name, category];
+            cart[idstr] = [1, name, category,price];
         }
         updateCart(cart);
     });
