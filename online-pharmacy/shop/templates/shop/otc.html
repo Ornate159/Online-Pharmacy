@@ -13,13 +13,8 @@
                 <div class="card-body">
                     <h4 class="card-title" style="color: #2c3e50; font-size: 22px; font-weight: 500;" id="namepr{{ product.id }}">{{ product.product_name }}</h4>
                     <p class="card-text"><b>Price: {{ product.price }}</b></p>
-<<<<<<< HEAD
                     <span id="divpr{{ product.id }}" class="divpr">
                         <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="OTC Medicines" style="width: 6.8rem; font-size: 14.5px; font-weight:lighter;">Add To Cart</button>
-=======
-                    <span id="divotc{{ product.id }}" class="divpr">
-                        <button id="otc{{ product.id }}" class="btn btn-primary cart" data-category="OTC" data-price="{{ product.price }}" style="width: 6.8rem; font-size: 14.5px; font-weight:lighter;">Add To Cart</button>
->>>>>>> 2f7f140130c0b713e0f4f1c2523424faa07a21c8
                     </span>
                     <a href="/shop/product/{{ product.id }}"><button id="qv{{ product.id }}" class="btn btn-primary cart" data-category="OTC" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</button></a>
                 </div>
