@@ -15,12 +15,12 @@
                     <p class="card-text"><b>Price: {{ product.price }} BDT</b></p>
                     <span id="divpr{{ product.id }}" class="divpr">
                         {% if user.is_authenticated %}
-                                            <span id="divpr{{ i.id }}" class="divpr">
-                                                <button id="pr{{ i.id }}" class="btn btn-primary cart" data-category="{{ product.0.category }}" data-price="{{ i.price }}" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Add To Cart</button>
-                                            </span>
-                                        {% else %}
-                                            <a href="/shop/login/"><button class="btn btn-primary" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Order Now</button></a>
-                                        {% endif %}
+                            <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="{{ product.0.category }}" data-price="{{ product.price }}" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Add To Cart</button>
+                        {% else %}
+                            <a href="/shop/login/">
+                                <button class="btn btn-primary" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Order Now</button>
+                            </a>
+                        {% endif %}
                     </span>
                     <a href="/shop/product/{{ product.id }}"><button id="qv{{ product.id }}" class="btn btn-primary cart" data-category="prescribed" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</button></a>
                 </div>
