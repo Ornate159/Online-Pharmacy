@@ -83,6 +83,9 @@ def about(request):
 def contact(request):
     return render(request, 'shop/contact.html')
 
+def payment(request):
+    return render(request, 'shop/payment.html')
+
 def search(request):
     products = Product.objects.all()
     keyword = request.GET.get('search')

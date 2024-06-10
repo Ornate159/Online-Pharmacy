@@ -1,64 +1,71 @@
-
 {% extends 'shop/style.html' %}
 
 {% block title %} {{product.product_name}} {% endblock %}
+{% block css %}
+        body{
+            background-color: #f9f9f9;
+        }
+    {% endblock %}
 {% block body %}
-<div class="container my-4">
-    <div class="row">
-        <div class="col-md-4">
+
+
+<div class="container my-4" >
+    <div class="row" >
+        <div class="col-md-5" >
             <div class="row">
-            <img src="/media/{{product.image}}"width="400px" height="400px">
+                <div class="col">
+                    <img src="/media/{{product.image}}" style="height: 25rem; width: auto;" class="img-fluid rounded shadow" alt="{{product.product_name}}">
+                </div>
             </div>
-
-
-        <div class="row">
-         <button type="button" class="btn btn-primary mx-4">Buy Now</button>
-         <button type="button" class="btn btn-primary mx-4">Add To Cart</button>
         </div>
-        </div>
-        <div class="col-md-8">
-            <h4>{{product.product_name}}</h4>
-            <p><b>Price : {{product.price}} BDT</b></p>
-            <p>{{product.desc}}</p>
-
-        </div>
+        <div class="col-md-6 border rounded p-4" style="height: 25rem;">
+            <h2 class="font-weight-bold mb-4">{{product.product_name}}</h2>
+            <p class="h5 text-danger mb-3"><b>Price: {{product.price}} BDT</b></p>
+            <p class="lead">{{product.desc}}</p>
+            <div style="display: flex; gap: 2rem;justify-content: flex-start; padding-top: 2rem;">
+                <span id="divpr{{product.id}}" class="divpr">
+                    <button id="pr{{product.id}}" class="btn btn-primary cart" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
+                </span>
+                <span class="divpr">
+                    <a href="/shop" class="btn btn-primary cart" style="width: 10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
+                </span>
+                
+            </div>
+        </div>     
+        
     </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLR8d2omExLg4e6l20Yw3vR5/tXYc2kjp/rG/taxB5" crossorigin="anonymous"></script>
+
 <script>
-console.log('working');
-if(localStorage.getItem('cart')==null){
-var cart={};
-}
-else{
-cart=JSON.parse(localStorage.getItem('cart'));
-document.getElementById('cart').innerHTML= Object.keys(cart).length;
-}
-$('.cart').click(function(){
-console.log('clicked');
-var idstr = this.id.toString();
-console.log(idstr);
-if(cart[idstr]!=undefined){
-cart[idstr]=cart[idstr]+1;
+$(document).ready(function() {
+    console.log('working');
 
-}
-else{
-cart[idstr]=1;
-}
+    if(localStorage.getItem('cart') === null){
+        var cart = {};
+    } else {
+        cart = JSON.parse(localStorage.getItem('cart'));
+        document.getElementById('cart').innerHTML = Object.keys(cart).length;
+    }
 
-console.log(cart);
-localStorage.setItem('cart',JSON.stringify(cart));
-document.getElementById('cart').innerHTML= Object.keys(cart).length;
+    $('.cart').click(function(){
+        console.log('clicked');
+        var idstr = this.id.toString();
+        console.log(idstr);
+        if(cart[idstr] != undefined){
+            cart[idstr] = cart[idstr] + 1;
+        } else {
+            cart[idstr] = 1;
+        }
+
+        console.log(cart);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        document.getElementById('cart').innerHTML = Object.keys(cart).length;
+    });
+
+    $('#popcart').popover();
+    document.getElementById('popcart').setAttribute('data-content','<h5>Added Medicine Items</h5>');
 });
-
-
-$('#popcart').popover();
-document.getElementById('popcart').setAttribute('data-content','<h5>Added Medicine Items</h5>');
-
 </script>
-
-
-
-
 {% endblock %}
-

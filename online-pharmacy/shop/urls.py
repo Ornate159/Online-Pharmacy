@@ -17,6 +17,7 @@ urlpatterns = [
     path("otc/", views.otc, name="otc"),
     path("healthcare/", views.healthcare, name="healthcare"),
     path("pharmacist/", views.pharmacist, name="Pharmacist"),
+    path("payment/", views.payment, name="payment"),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
