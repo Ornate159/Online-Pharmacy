@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            color: #fff;
+            background: #19aa8d;
+            font-family: 'Roboto', sans-serif;
+        }
+        .form-control, .form-control:focus, .input-group-addon {
+            border-color: #e1e1e1;
+        }
+        .form-control, .btn {
+            border-radius: 5px;
+        }
+        .profile-form {
+            width: 600px;
+            margin: 0 auto;
+            padding: 30px 0;
+        }
+        .profile-form form {
+            color: #999;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            background: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            transition: all 0.3s ease;
+        }
+        .profile-form h2 {
+            color: #333;
+            font-weight: bold;
+            margin-top: 0;
+        }
+        .profile-form hr {
+            margin: 0 -40px 20px;
+        }
+        .profile-form .form-group {
+            margin-bottom: 20px;
+        }
+        .profile-form label {
+            font-weight: normal;
+            font-size: 13px;
+        }
+        .profile-form .form-control {
+            min-height: 38px;
+            box-shadow: none !important;
+            transition: border-color 0.3s ease;
+            width: calc(100% - 42px); 
+        }
+        .profile-form .input-group-addon {
+            width: 42px; 
+            text-align: center;
+            background-color: #f7f7f7;
+        }
+        .profile-form .btn {
+            font-size: 16px;
+            font-weight: bold;
+            background: #ff6f61;
+            border: none;
+            min-width: 140px;
+            transition: background-color 0.3s ease;
+        }
+        .profile-form .btn:hover, .profile-form .btn:focus {
+            background: #e55e50;
+            outline: none;
+        }
+        .profile-form a {
+            color: #ff6f61;
+            transition: color 0.3s ease;
+        }
+        .profile-form a:hover {
+            text-decoration: none;
+            color: #ff3f34;
+        }
+        .profile-form form a {
+            color: #ff6f61;
+            text-decoration: none;
+        }
+        .profile-form form a:hover {
+            text-decoration: underline;
+        }
+        .profile-form .fa {
+            font-size: 21px;
+        }
+        .profile-form .fa-paper-plane {
+            font-size: 18px;
+        }
+        .profile-form .fa-check {
+            color: #fff;
+            left: 17px;
+            top: 18px;
+            font-size: 7px;
+            position: absolute;
+        }
+        .login-btn {
+            display: inline-block;
+            padding: 7.5px 15px;
+            margin-top: 10px;
+            background-color: #ff6f61;
+            color: #fff !important; 
+            border: 2px solid #ff6f61;
+            border-radius: 5px;
+            font-weight: bold;
+            text-decoration: none !important;
+            transition: background-color 0.3s, border-color 0.3s !important;
+        }
+        .login-btn:hover {
+            background-color: #e55e50;
+            border-color: #e55e50;
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-form">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <h2>Edit Profile</h2>
+            <p>Update your account information below</p>
+            <hr>
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                    {{ u_form.username }}
+                </div>
+                {% if u_form.username.errors %}
+                    <p class="text-danger">{{ u_form.username.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+                    {{ u_form.email }}
+                </div>
+                {% if u_form.email.errors %}
+                    <p class="text-danger">{{ u_form.email.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_full_name">Full Name</label>
+                <input type="text" name="full_name" class="form-control" id="id_full_name" value="{{ p_form.full_name.value }}">
+                {% if p_form.full_name.errors %}
+                    <p class="text-danger">{{ p_form.full_name.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_address">Address</label>
+                <input type="text" name="address" class="form-control" id="id_address" value="{{ p_form.address.value }}">
+                {% if p_form.address.errors %}
+                    <p class="text-danger">{{ p_form.address.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_gender">Gender</label>
+                <select name="gender" class="form-control" id="id_gender">
+                    {% for value, label in p_form.fields.gender.choices %}
+                        <option value="{{ value }}" {% if value == p_form.gender.value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                {% if p_form.gender.errors %}
+                    <p class="text-danger">{{ p_form.gender.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_contact_number">Contact Number</label>
+                <input type="text" name="contact_number" class="form-control" id="id_contact_number" value="{{ p_form.contact_number.value }}">
+                {% if p_form.contact_number.errors %}
+                    <p class="text-danger">{{ p_form.contact_number.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="id_image">Profile Image</label>
+                {{ p_form.image }}
+                {% if p_form.image.errors %}
+                    <p class="text-danger">{{ p_form.image.errors }}</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg">Update</button>
+            </div>
+        </form>
+        {% if request.method == 'POST' and not u_form.username.errors and not u_form.email.errors and not p_form.image.errors %}
+            <div class="text-center">
+                <p>Your profile has been successfully updated.</p>
+                <a class="login-btn" href="/shop/login">Login</a>
+            </div>
+        {% endif %}
+    </div>
+    
+    
+</body>
+</html>

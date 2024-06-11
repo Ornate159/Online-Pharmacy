@@ -9,6 +9,46 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.decorators import login_required
+from .forms import UserUpdateForm, UserProfileUpdateForm
+
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        try:
+            profile_instance = request.user.userprofile
+        except UserProfile.DoesNotExist:
+            profile_instance = None
+        
+        p_form = UserProfileUpdateForm(request.POST, request.FILES, instance=profile_instance)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            if p_form:
+                profile = p_form.save(commit=False)
+                profile.user = request.user
+                profile.save()
+            messages.success(request, 'Your account has been updated!')
+            return redirect('/')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        try:
+            profile_instance = request.user.userprofile
+        except UserProfile.DoesNotExist:
+            profile_instance = None
+
+        p_form = UserProfileUpdateForm(instance=profile_instance)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    return render(request, 'shop/profile.html', context)
+
+
+
 
 def Login(request):
     if request.user.is_authenticated:

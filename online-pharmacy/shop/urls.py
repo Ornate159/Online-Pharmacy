@@ -18,6 +18,7 @@ urlpatterns = [
     path("healthcare/", views.healthcare, name="healthcare"),
     path("pharmacist/", views.pharmacist, name="Pharmacist"),
     path("payment/", views.payment, name="payment"),
+    path('profile/', views.profile, name='profile'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

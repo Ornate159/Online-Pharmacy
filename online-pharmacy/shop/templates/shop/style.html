@@ -108,11 +108,16 @@
                 Cart(<span id="cart">0</span>)
             </button>
         {% endif %}
-        <a href="/shop/profile"><button type="button" class="mx-2 btn btn-primary" data-html='true'
-                                        data-container="body" data-bs-toggle="popover" data-placement="bottom"
-                                        data-content="Profile">
-            {{request.user}}
-        </button></a>
+        <a href="/shop/profile">
+          <button type="button" class="mx-2 btn btn-primary" data-html='true'
+                  data-container="body" data-bs-toggle="popover" data-placement="bottom"
+                  data-content="Profile" style="width: 120px;">
+              <img src="{{ request.user.userprofile.image.url }}" style="width: 25px; height: 25px; border-radius: 50%; margin-right: 5px;">
+              {{ request.user }}
+          </button>
+      </a>
+      
+      
         <a href="/shop/logout"><button type="button" class="mx-2 btn btn-secondary" data-html='true'
                                        data-container="body" data-bs-toggle="popover" data-placement="bottom"
                                        data-content="Log Out">
