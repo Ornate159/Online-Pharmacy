@@ -125,7 +125,7 @@ def search(request):
     allCat = {item['category'] for item in listCat}
     for cat in allCat:
         list = Product.objects.filter(category=cat)
-        result = [item for item in list if len(keyword) >= 3 and keyword in item.product_name.lower() or keyword in item.category.lower() or keyword in item.subcategory.lower()]
+        result = [item for item in list if len(keyword) >= 1 and keyword in item.product_name.lower()]
 
         x = len(products)
         slideN = x // 4 + ceil((x / 4 - (x // 4)))

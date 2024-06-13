@@ -1,149 +1,87 @@
 {% extends 'shop/style.html' %}
 {% block title %} Search List {% endblock %}
-    {% block css %}
-        .col-md-3 {
-            display: inline-block;
-            margin-left: -4px;
-        }
+{% block css %}
+.col-md-3 {
+    display: inline-block;
+    margin-left: -4px;
+}
 
-        .col-md-3 img {
-            width: 250px;
-            height: 250px;
-        }
+.col-md-3 img {
+    width: 250px;
+    height: 250px;
+}
 
-        body .carousel-control-indicator li {
-            background-color: blue;
-        }
+body .carousel-control-indicator li {
+    background-color: blue;
+}
 
-        }
-        body .carousel-indicators{
-        bottom:0;
-        }
+body .carousel-indicators{
+bottom:0;
+}
 
-        .carousel-control-prev,
-        .carousel-control-next{
-        top:auto;
-        bottom:auto;
-        padding-top:200px;
-        }
+.carousel-control-prev,
+.carousel-control-next{
+top:auto;
+bottom:auto;
+padding-top:200px;
+}
 
-        body .no-padding {
-            padding-left: 0;
-            padding-right: 0;
-        }
+body .no-padding {
+    padding-left: 0;
+    padding-right: 0;
+}
 
-        .carousel-control-prev-icon {
-            background: black no-repeat center center;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
-        }
+.carousel-control-prev-icon {
+    filter: invert(28%) sepia(60%) saturate(374%) hue-rotate(161deg) brightness(95%) contrast(89%);
+    background-color: transparent;
+    transform: scale(2.2); 
+}
 
-        .carousel-control-next-icon {
-            background: black no-repeat center center;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
-
-        body .carousel-control-prev-icon body .carousel-control-next-icon {
-            background-color: blue;
-        }
+.carousel-control-next-icon {
+    filter: invert(28%) sepia(60%) saturate(374%) hue-rotate(161deg) brightness(95%) contrast(89%);
+    background-color: transparent;
+    transform: scale(2.2);
+}
 
 
-        .carousel-indicators .active{
-        background-color: blue;
-        }
+.carousel-indicators .active{
+    background-color: #2ec4b6;
+}
 
 
-    {% endblock %}
+{% endblock %}
 
 
-{% block body%}
+{% block body %}
 {% load static %}
 
-<div class="container"> <!--slide start-->
-    {% for product,range,slideN in listAll %}
-    <h2 >{{product.0.category}}</h2>
-    <div Class="row">
-<div id="demo{{forloop.counter}}" class=" col carousel slide my-3" data-ride="carousel">
-    <ul class="carousel-indicators">
-      <li data-target="#demo{{forloop.counter}}" data-slide-to="0" class="active"></li>
-        {% for i in range %}
-      <li data-target="#demo{{forloop.parentloop.counter}}"data-slide-to="{{i}}" ></li>
-        {% endfor %}
-    </ul>
-
-          <div class="container carousel-inner no-padding">
-            <div class="carousel-item active">
-
-
-                {%for i in product %}
-                <div class="col-xs-3 col-sm-3 col-md-3">
-                  <div class="card align-items-center" style="width: 18rem;">
-                    <a href="/shop/product/{{i.id}}"><img src='/media/{{i.image}}'  class="card-img-top" alt="..."></a>
-                    <div class="card-body">
-                      <h5 class="card-title">{{i.product_name}}</h5>
-                      <p class="card-text">{{i.desc}}</p>
-                      <button id="pr{{i.id}}"class="btn btn-primary cart" mx-2>Add to Cart</button>
-                      <button id="qr{{i.id}}"class="btn btn-primary remove" mx-2>Remove Product</button>
-                    </div>
-                  </div>
+<div class="container">
+    {% for product, range, slideN in listAll %}
+    <div class="row">
+        {% for i in product %}
+        <div class="col-md-3">
+            <div class="card align-items-center" style="width: 16.5rem; margin: 10px; border: 1px solid #f9f9f991; border-radius: 5px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);">
+                <img src='/media/{{ i.image }}' class="card-img-top" alt="product" style="width: 15rem; height: 18rem; object-fit: contain; border: 1px solid rgb(226, 224, 224); border-radius: 4px; margin-top: 4px;">
+                <div class="card-body">
+                    <h4 class="card-title" style="color: #2c3e50; font-size: 22px; font-weight: 500;" id="namepr{{ i.id }}">{{ i.product_name }}</h4>
+                    <p class="card-text"><b>Price: {{ i.price }} BDT</b></p>
+                    <span id="divpr{{ i.id }}" class="divpr">
+                        {% if user.is_authenticated %}
+                        <button id="pr{{ i.id }}" class="btn btn-primary cart" data-category="{{ i.category }}" data-price="{{ i.price }}" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Add To Cart</button>
+                        {% else %}
+                        <a href="/shop/login/">
+                            <button class="btn btn-primary" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Order Now</button>
+                        </a>
+                        {% endif %}
+                    </span>
+                    <a href="/shop/product/{{ i.id }}">
+                        <button id="qv{{ i.id }}" class="btn btn-primary cart" data-category="prescribed" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</button>
+                    </a>
                 </div>
-
-
-                {% if  forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
-            </div> <div class="carousel-item">
-                {% endif %}
-
-                {% endfor %}
-          </div>
-    </div>
-</div>
-
+            </div>
         </div>
+        {% endfor %}
+    </div>
     {% endfor %}
-
-</div>>
-    {% endblock %}
-
-# For cart System
-{% block javascript %}
-<script>
-if(localStorage.getItem('cart')==null){
-var cart={};
-}
-else{
-cart=JSON.parse(localStorage.getItem('cart'));
-document.getElementById('cart').innerHTML= Object.keys(cart).length;
-}
-$('.cart').click(function(){
-var idstr = this.id.toString();
-
-if(cart[idstr]!=undefined){
-cart[idstr]=cart[idstr]+1;
-
-}
-else{
-cart[idstr]=1;
-}
-
-localStorage.setItem('cart',JSON.stringify(cart));
-document.getElementById('cart').innerHTML= Object.keys(cart).length;
-});
-$('.remove').clik(function(){
-
-var idstr = this.id.toString();
-
-if(cart[idstr]!=undefined){
-
-}
-else{
-cart[idstr]=cart[idstr]-1;
-}
-localStorage.setItem('remove',JSON.stringify(remove));
-document.getElementById('remove').innerHTML= Object.keys(remove).length;
-});
-
-
-$('#popcart').popover();
-document.getElementById('popcart').setAttribute('data-content','<h5>Added Medicine Items</h5>');
-
-</script>
-
+</div>
 {% endblock %}

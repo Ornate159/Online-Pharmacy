@@ -254,14 +254,13 @@
                             // If the add to cart button is clicked, add/increment the item
                             $('.divpr').on('click', 'button.cart', function() {
                                 var idstr = this.id.toString();
-                                var category = this.getAttribute('data-category');
                                 var price = parseFloat(this.getAttribute('data-price'));
                                 if (cart[idstr] != undefined) {
                                     qty = cart[idstr][0] + 1;
                                 } else {
                                     qty = 1;
                                     name = document.getElementById('name' + idstr).innerHTML;
-                                    cart[idstr] = [qty, name, category,price];
+                                    cart[idstr] = [qty, name, price];
                                 }
                                 updateCart(cart);
                             });
@@ -275,7 +274,7 @@
                                 var i = 1;
                                 for (var item in cart) {
                                     var itemName = document.getElementById('name' + item) ? document.getElementById('name' + item).innerHTML.slice(0, 19) : cart[item][1].slice(0, 19);
-                                    popStr += "<b>" + i + "</b>. " + itemName + "... Qty: " + cart[item][0] + " (Category: " + cart[item][2] + ")<br>";
+                                    popStr += "<b>" + i + "</b>. " + itemName + "... Qty: " + cart[item][0] + "<br>";
                                     i++;
                                 }
                                 popStr += "</div> <a href='/shop/checkout'><button class='btn btn-primary' id='checkout'>Checkout</button></a> <button class='btn btn-primary' onclick='clearCartAndClosePopover()' id='clearCart'>Clear Cart</button>";
@@ -288,24 +287,24 @@
                             }
                         
                             function clearCart() {
-    cart = JSON.parse(localStorage.getItem('cart'));
-    for (var item in cart) {
-        var divElement = document.getElementById('div' + item);
-        if (divElement) {
-            divElement.innerHTML = '<button id="' + item + '" class="btn btn-primary cart" data-category="' + cart[item][2] + '">Add To Cart</button>';
-        }
-    }
-    localStorage.clear();
-    cart = {};
-    updateCart(cart);
-}
+                                cart = JSON.parse(localStorage.getItem('cart'));
+                                for (var item in cart) {
+                                    var divElement = document.getElementById('div' + item);
+                                    if (divElement) {
+                                        divElement.innerHTML = '<button id="' + item + '" class="btn btn-primary cart">Add To Cart</button>';
+                                    }
+                                }
+                                localStorage.clear();
+                                cart = {};
+                                updateCart(cart);
+                            }
                         
                             function updateCart(cart) {
                                 var sum = 0;
                                 for (var item in cart) {
                                     sum += cart[item][0];
                                     if (document.getElementById('div' + item)) {
-                                        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus' data-category='" + cart[item][2] + "'>-</button> <span id='val" + item + "'>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus' data-category='" + cart[item][2] + "'> + </button>";
+                                        document.getElementById('div' + item).innerHTML = "<button id='minus" + item + "' class='btn btn-primary minus'>-</button> <span id='val" + item + "'>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-primary plus'> + </button>";
                                     }
                                 }
                                 localStorage.setItem('cart', JSON.stringify(cart));
@@ -341,6 +340,7 @@
                                 }
                             });
                         </script>
+                        
                         
                         
                           
