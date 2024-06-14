@@ -10,6 +10,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from .models import UserProfile
 
+class CustomPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
