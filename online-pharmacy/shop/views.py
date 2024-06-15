@@ -16,6 +16,45 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import CustomPasswordChangeForm
 
+from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponse
+from .models import Product, UserProfile
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+
+def product_detail(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+
+    if request.method == "POST":
+        if request.user.is_authenticated:
+            if 'available' in request.POST:
+                if request.user not in product.available_pharmacies.all():
+                    product.available_pharmacies.add(request.user)
+                    messages.success(request, 'Product marked as available.')
+                else:
+                    messages.info(request, 'You are already marked as available for this product.')
+            elif 'not_available' in request.POST:
+                if request.user in product.available_pharmacies.all():
+                    product.available_pharmacies.remove(request.user)
+                    messages.success(request, 'Product marked as not available.')
+                else:
+                    messages.info(request, 'You are already marked as not available for this product.')
+            return redirect('product_detail', product_id=product.id)
+        else:
+            messages.error(request, 'You need to be logged in to perform this action.')
+
+    available_pharmacies = product.available_pharmacies.all()
+
+    context = {
+        'product': product,
+        'available_pharmacies': available_pharmacies,
+        'user_role': request.user.userprofile.role if request.user.is_authenticated else None,
+    }
+    print("Form data:", request.POST)
+    print("CSRF token:", request.POST.get('csrfmiddlewaretoken'))
+    return render(request, 'shop/product.html', context)
+
+
 @login_required
 def profile(request):
     if request.method == 'POST':
@@ -183,7 +222,3 @@ def pharmacist(request):
     else:
         form = ProductForm()
     return render(request, 'shop/pharmacist.html', {'form': form})
-
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    return render(request, 'shop/product.html', {'product': product})
