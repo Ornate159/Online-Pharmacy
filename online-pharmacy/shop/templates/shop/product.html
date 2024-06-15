@@ -8,29 +8,51 @@
         background-color: #f9f9f9;
     }
 
-        .content form button:hover {
-            background-color: #ff3f34;
-        }
 
-        .messages {
-            margin-top: 20px;
-            list-style-type: none;
-            padding: 0;
-        }
 
-        .messages li {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 6px;
-        }
+    .content form button:hover {
+        background-color: #ff3f34;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    .messages {
+        margin-top: 20px;
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .messages li {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 6px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .section {
+        height: 19vw;
+        width: 19vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff;
+    }
+
+    .section img {
+        height: 19vw;
+        width: 19vw;
+        border-radius: 8px;
+    }
+
+    .section p {
+        margin: 0;
+    }
 </style>
 {% endblock %}
 
@@ -42,19 +64,16 @@
         {% endfor %}
     </ul>
 {% endif %}
-<div class="container my-4">
-    <div class="row">
-        <div class="col-md-5">
-            <div class="row">
-                <div class="col">
-                    <img src="/media/{{ product.image }}" style="height: 25rem; width: auto;" class="img-fluid rounded shadow" alt="{{ product.product_name }}">
-                </div>
-            </div>
+<h2 id="namepr{{ product.id }}" style="color: #e55e50; text-align: center; background-color: #f9f9f9; padding-bottom: 50px; font-weight: 600; margin: 0px; "><span style="color: #2c3e50;font-weight: 400; font-size: 30px; ">Product Name: </span>{{ product.product_name }}</h2>
+<div  style="background: #f9f9f9; display: flex; justify-content: center; ">
+    <div class="row" style=" display: flex; gap: 30px; background: #f9f9f9; ">
+        <div class="section" >
+            <img src="/media/{{ product.image }}" class="img-fluid shadow" alt="{{ product.product_name }}" style="object-fit: contain;">
         </div>
-        <span class="col-md-6 border rounded p-4" style="height: 25rem;">
-            <h2 class="font-weight-bold mb-4" id="namepr{{ product.id }}">{{ product.product_name }}</h2>
+        <div class=" section" style="background-color: #f9f9f9; border-radius: 8px; padding: 16px; display: flex; align-items: flex-start; justify-content: flex-start;">
+            <p style="font-size: 1.5em; font-weight: 500; color: #2c3e50; margin-bottom: 20px;">Category:  {{ product.category }}</p> 
             <p class="h5 text-danger mb-3"><b>Price: {{ product.price }} BDT</b></p>
-            <p class="lead">{{ product.desc }}</p>
+            <p class="lead" style="font-size: 14px; text-align: justify; padding-bottom: 15px;">{{ product.desc }}</p>
 
             {% if user.is_authenticated and user.userprofile.role == 'Pharmacist' %}
             <form method="post">
@@ -66,30 +85,38 @@
                 {% endif %}
             </form>
             {% elif user.is_authenticated %}
+            <div style="display: flex; gap: 15px;">
             <span id="divpr{{ product.id }}" class="divpr">
                 <button id="pr{{ product.id }}" class="btn btn-primary cart" data-category="{{ product.category }}" data-price="{{ product.price }}" style="width:10rem; font-size: 20px; font-weight:lighter;">Add To Cart</button>
             </span>
             <span class="divpr">
-                <a href="/shop" class="btn btn-primary" style="width: 10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
+                <a href="/shop" class="btn btn-primary" style="width:10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
             </span>
-            
+            </div>
             {% else %}
+            <div style="display: flex; gap: 15px;">
             <span id="divpr{{ product.id }}" class="divpr">
                 <a href="/shop/login/"><button class="btn btn-primary" style="width:10rem; font-size: 20px; font-weight:lighter;">Order Now</button></a>
             </span>
             <span class="divpr">
                 <a href="/shop" class="btn btn-primary" style="width: 10rem; font-size: 20px; font-weight: lighter;">Buy More</a>
             </span>
+            </div>
             {% endif %}
-            <div>
-                <p>Available Pharmacies:</p>
-                <ul>
-                    {% for pharmacy in available_pharmacies %}
-                        <li>{{ pharmacy.username }}</li>
+        </div>
+        <div class=" section" style="background-color: #f9f9f9; border-radius: 8px; padding: 16px; display: flex; align-items: flex-start; justify-content: flex-start;">
+            <div style=" max-width: 100%; ">
+                <p style="font-size: 1.5em; font-weight: 500; color: #2c3e50; margin-bottom: 20px; ">Pharmacies available in </p>
+                <ul style="list-style: none; padding: 0;">
+                    {% for pharmacy_data in pharmacies_with_area %}
+                        <li style="background: #fff; margin-bottom: 8px; padding: 10px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex; align-items: center;">
+                            <div style="flex-grow: 1; width: 16vw; font-size: 1em; color: #2c3e50;">{{ pharmacy_data.pharmacy.username }}</div>
+                            <div style="font-size: 1em; width: 16vw; color: #2c3e50; margin-left: 10px;"><img src="/media/shop/images/location.png" style="height: 18px; width: 18px;padding-bottom: 1px;"> {{ pharmacy_data.area }}</div>
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
-        </div>     
+        </div>
     </div>
 </div>
 {% endblock %}

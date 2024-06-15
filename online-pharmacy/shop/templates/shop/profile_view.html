@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile View</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #adf5ee, #0ba797);
+            color: #333;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .profile-container {
+            width: 28vw;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        .profile-container:hover {
+            transform: translateY(-10px);
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-header img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .profile-header img:hover {
+            transform: scale(1.1);
+        }
+        .profile-header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6f61;
+        }
+        .profile-header p {
+            font-size: 18px;
+            color: #666;
+        }
+        .profile-details {
+            margin-bottom: 20px;
+        }
+        .profile-details p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .profile-details label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: #333;
+        }
+        .edit-profile-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .edit-profile-btn a {
+            color: #fff;
+            background: #ff6f61;
+            padding: 10px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s ease;
+            font-size: 16px;
+        }
+        .edit-profile-btn a:hover {
+            background: #e55e50;
+        }
+        body .btn {
+            height: 40px;
+            width: 200px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #ff6f61;
+            border: none;
+            min-width: 140px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            color: #e1e1e1;
+        }
+        body .btn:hover, body .btn:focus {
+            background: #e55e50;
+        }
+        .messages {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .messages li {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <span style="position: absolute; top: 20px; left: 20px;">
+        <a href="/shop/"><button class="btn btn-primary" style="color: #ffffff;">Back to Homepage</button></a>
+    </span>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="{{ profile.image.url }}" alt="Profile Picture">
+            <h2>{{ profile.full_name }}</h2>
+            <p>{{ user.username }}</p>
+        </div>
+        <ul class="messages">
+            {% if messages %}
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="profile-details">
+            <p><label>Email:</label> {{ user.email }}</p>
+            <p><label>Full Name:</label> {{ profile.full_name }}</p>
+            <p><label>Address:</label> {{ profile.address }}</p>
+            <p><label>Area:</label> {{ profile.area }}</p>
+            <p><label>Gender:</label> {{ profile.gender }}</p>
+            <p><label>Contact Number:</label> {{ profile.contact_number }}</p>
+        </div>
+        <div class="edit-profile-btn">
+            <a href="{% url 'profile' %}">Edit Profile</a>
+        </div>
+    </div>
+
+</body>
+</html>

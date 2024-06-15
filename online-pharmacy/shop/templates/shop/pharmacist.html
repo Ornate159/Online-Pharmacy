@@ -107,9 +107,28 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        body .btn {
+            height: 40px;
+            width: 200px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            background: #ff6f61;
+            border: none;
+            min-width: 140px;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            color: #e1e1e1;
+        }
+        body .btn:hover, body .btn:focus {
+            background: #e55e50;
+        }
     </style>
 </head>
 <body>
+    <span style="position: absolute; top: 20px; left: 20px;">
+        <a href="/shop/"><button class="btn btn-primary" style="color: #ffffff;">Back to Homepage</button></a>
+    </span>
     <div class="container">
         <div class="header">
             <h1>Welcome, Pharmacist!</h1>

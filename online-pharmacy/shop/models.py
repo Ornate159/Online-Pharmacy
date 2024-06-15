@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 
 class Product(models.Model):
     product_id = models.AutoField
-    product_name = models.CharField(max_length=50)
-    category = models.CharField(max_length=50, default="")
-    subcategory = models.CharField(max_length=50, default="")
+    product_name = models.CharField(max_length=20)
+    category = models.CharField(max_length=20, default="")
+    subcategory = models.CharField(max_length=20, default="")
     price = models.IntegerField(default=0)
     desc = models.CharField(max_length=1000)
     pub_date = models.DateField()
@@ -26,9 +26,13 @@ class UserProfile(models.Model):
     role = models.CharField(max_length=50, choices=USER_ROLES, default='Customer')
     image = models.ImageField(upload_to='profile_pics/', default='')
     full_name = models.CharField(max_length=100, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
+    address = models.CharField(max_length=50, blank=True, null=True)
+    area = models.CharField(max_length=20, blank=True, null=True)
     gender = models.CharField(max_length=10, blank=True, null=True)
     contact_number = models.CharField(max_length=15, blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
+
+    def get_area(self):
+        return self.area

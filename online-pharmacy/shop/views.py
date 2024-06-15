@@ -45,15 +45,24 @@ def product_detail(request, product_id):
 
     available_pharmacies = product.available_pharmacies.all()
 
+    print(available_pharmacies)
+
+    pharmacies_with_area = [
+        {
+            "pharmacy": pharmacy,
+            "area": pharmacy.userprofile.area if hasattr(pharmacy, 'userprofile') else "N/A"
+        }
+        for pharmacy in available_pharmacies
+    ]
+
     context = {
         'product': product,
         'available_pharmacies': available_pharmacies,
+        'pharmacies_with_area': pharmacies_with_area,
         'user_role': request.user.userprofile.role if request.user.is_authenticated else None,
     }
-    print("Form data:", request.POST)
-    print("CSRF token:", request.POST.get('csrfmiddlewaretoken'))
-    return render(request, 'shop/product.html', context)
 
+    return render(request, 'shop/product.html', context)
 
 @login_required
 def profile(request):
@@ -63,7 +72,7 @@ def profile(request):
             profile_instance = request.user.userprofile
         except UserProfile.DoesNotExist:
             profile_instance = None
-        
+
         p_form = UserProfileUpdateForm(request.POST, request.FILES, instance=profile_instance)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
@@ -72,7 +81,7 @@ def profile(request):
                 profile.user = request.user
                 profile.save()
             messages.success(request, 'Your account has been updated!')
-            return redirect('/')
+            return redirect('/shop/profile_view')
         else:
             messages.error(request, 'Please correct the error below.')
     else:
@@ -90,6 +99,18 @@ def profile(request):
     }
     return render(request, 'shop/profile.html', context)
 
+
+@login_required
+def profile_view(request):
+    user = request.user
+    profile = get_object_or_404(UserProfile, user=user)
+    
+    context = {
+        'user': user,
+        'profile': profile,
+    }
+    return render(request, 'shop/profile_view.html', context)
+
 @login_required
 def change_password(request):
     if request.method == 'POST':
@@ -98,7 +119,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user) 
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('') 
+            return redirect('/shop/profile') 
         else:
             messages.error(request, 'Please correct the error below.')
     else:

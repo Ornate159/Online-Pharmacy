@@ -31,7 +31,7 @@ class UserProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['image', 'full_name', 'address', 'gender', 'contact_number']
+        fields = ['image', 'full_name', 'address', 'area','gender', 'contact_number']
 
 class CreateUserForm(UserCreationForm):
     ROLE_CHOICES = [
