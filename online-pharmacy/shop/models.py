@@ -9,7 +9,7 @@ class Product(models.Model):
     price = models.IntegerField(default=0)
     desc = models.CharField(max_length=1000)
     pub_date = models.DateField()
-    image = models.ImageField(upload_to="shop/images", default="shop/images/default.jpg")
+    image = models.ImageField(upload_to="shop/images", default="/default.jpg")
     available_pharmacies = models.ManyToManyField(User, related_name='available_products', blank=True)
 
     def __str__(self):
@@ -28,7 +28,6 @@ class UserProfile(models.Model):
     full_name = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=50, blank=True, null=True)
     area = models.CharField(max_length=20, blank=True, null=True)
-    gender = models.CharField(max_length=10, blank=True, null=True)
     contact_number = models.CharField(max_length=15, blank=True, null=True)
 
     def __str__(self):

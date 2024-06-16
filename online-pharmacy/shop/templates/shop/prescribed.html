@@ -9,7 +9,7 @@
         {% for product in products %}
         <div class="col-md-3">
             <div class="card align-items-center" style="width: 16.5rem; margin: 10px; border: 1px solid #f9f9f991; border-radius: 5px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);">
-                <img src='/media/{{ product.image }}' class="card-img-top" alt="product" style="width: 15rem; height: 18rem; object-fit: contain; border: 1px solid rgb(226, 224, 224); border-radius: 4px; margin-top: 4px;">
+                <img src='/media/{{ product.image }}' class="card-img-top" alt="product" style="width: 15rem; height: 15rem; object-fit: contain; border: 1px solid rgb(226, 224, 224); border-radius: 4px; margin-top: 4px;">
                 <div class="card-body">
                     <h4 class="card-title" style="color: #2c3e50; font-size: 22px; font-weight: 500;" id="namepr{{ product.id }}">{{ product.product_name }}</h4>
                     <p class="card-text"><b>Price: {{ product.price }} BDT</b></p>

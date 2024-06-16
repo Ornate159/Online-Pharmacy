@@ -226,17 +226,6 @@
                 {% endif %}
             </div>
             <div class="form-group">
-                <label for="id_gender">Gender</label>
-                <select name="gender" class="form-control" id="id_gender">
-                    {% for value, label in p_form.fields.gender.choices %}
-                        <option value="{{ value }}" {% if value == p_form.gender.value %}selected{% endif %}>{{ label }}</option>
-                    {% endfor %}
-                </select>
-                {% if p_form.gender.errors %}
-                    <p class="text-danger">{{ p_form.gender.errors }}</p>
-                {% endif %}
-            </div>
-            <div class="form-group">
                 <label for="id_contact_number">Contact Number</label>
                 <input type="text" name="contact_number" class="form-control" id="id_contact_number" value="{{ p_form.contact_number.value }}">
                 {% if p_form.contact_number.errors %}

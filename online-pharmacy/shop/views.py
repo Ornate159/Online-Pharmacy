@@ -147,15 +147,17 @@ def Login(request):
         return render(request, 'shop/login.html', context)
 
 def signup(request):
-    form = CreateUserForm()
     if request.method == 'POST':
-        form = CreateUserForm(request.POST)
+        form = CreateUserForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
             role = form.cleaned_data.get('role')
-            UserProfile.objects.create(user=user, role=role)
+            image = form.cleaned_data.get('image')
+            UserProfile.objects.create(user=user, role=role, image=image)
             messages.success(request, 'Your Account Has Been Created')
             return redirect('/shop/login')
+    else:
+        form = CreateUserForm()
     context = {'form': form}
     return render(request, 'shop/signup.html', context)
 

@@ -6,6 +6,9 @@
 <style>
     body {
         background-color: #f9f9f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
 
@@ -45,8 +48,8 @@
     }
 
     .section img {
-        height: 19vw;
-        width: 19vw;
+        height: 18vw;
+        width: 18vw;
         border-radius: 8px;
     }
 
@@ -65,13 +68,14 @@
     </ul>
 {% endif %}
 <h2 id="namepr{{ product.id }}" style="color: #e55e50; text-align: center; background-color: #f9f9f9; padding-bottom: 50px; font-weight: 600; margin: 0px; "><span style="color: #2c3e50;font-weight: 400; font-size: 30px; ">Product Name: </span>{{ product.product_name }}</h2>
-<div  style="background: #f9f9f9; display: flex; justify-content: center; ">
-    <div class="row" style=" display: flex; gap: 30px; background: #f9f9f9; ">
+<div  style="background: #f9f9f9; display: flex; justify-content: center;">
+    <div class="row" style=" display: flex; background: #f9f9f9; width: 70%; border: 1px solid #acbdce; display: flex; justify-content: space-around; padding: 30px; border-radius: 10px;">
         <div class="section" >
             <img src="/media/{{ product.image }}" class="img-fluid shadow" alt="{{ product.product_name }}" style="object-fit: contain;">
         </div>
         <div class=" section" style="background-color: #f9f9f9; border-radius: 8px; padding: 16px; display: flex; align-items: flex-start; justify-content: flex-start;">
-            <p style="font-size: 1.5em; font-weight: 500; color: #2c3e50; margin-bottom: 20px;">Category:  {{ product.category }}</p> 
+            <p style="font-size: 1.5em; font-weight: 500; color: #2c3e50; margin-bottom: 5px;">Category:  {{ product.category }}</p> 
+            <p style="font-size: 1.3em; font-weight: 500; color: #506880; margin-bottom: 20px;">Sub-Category:  {{ product.subcategory }}</p>
             <p class="h5 text-danger mb-3"><b>Price: {{ product.price }} BDT</b></p>
             <p class="lead" style="font-size: 14px; text-align: justify; padding-bottom: 15px;">{{ product.desc }}</p>
 
@@ -79,8 +83,10 @@
             <form method="post">
                 {% csrf_token %}
                 {% if user in available_pharmacies %}
+                    <p style="color: #506880; font-size: 0.8rem; font-weight: 300; margin: 2px;"><b>Current Status: Available</b></p>
                     <button type="submit" name="not_available" class="btn btn-danger">Not Available</button>
                 {% else %}
+                <p style="color: #506880; font-size: 0.8rem; font-weight: 300; margin: 2px;"><b>Current Status: Not Available</b></p>
                     <button type="submit" name="available" class="btn btn-success">Available</button>
                 {% endif %}
             </form>
@@ -108,13 +114,19 @@
             <div style=" max-width: 100%; ">
                 <p style="font-size: 1.5em; font-weight: 500; color: #2c3e50; margin-bottom: 20px; ">Pharmacies available in </p>
                 <ul style="list-style: none; padding: 0;">
+                    {% if pharmacies_with_area %}
                     {% for pharmacy_data in pharmacies_with_area %}
                         <li style="background: #fff; margin-bottom: 8px; padding: 10px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex; align-items: center;">
-                            <div style="flex-grow: 1; width: 16vw; font-size: 1em; color: #2c3e50;">{{ pharmacy_data.pharmacy.username }}</div>
+                            <div style="flex-grow: 1; width: 18vw; font-size: 1em; color: #2c3e50;"><img src="/media/shop/images/pharma.png" style="height: 20px; width: 20px;margin-right: 4px;margin-bottom: 1px;">{{ pharmacy_data.pharmacy.username }}</div>
                             <div style="font-size: 1em; width: 16vw; color: #2c3e50; margin-left: 10px;"><img src="/media/shop/images/location.png" style="height: 18px; width: 18px;padding-bottom: 1px;"> {{ pharmacy_data.area }}</div>
                         </li>
                     {% endfor %}
-                </ul>
+                    {% else %}
+                    <li style="background: #fff; margin-bottom: 8px; padding: 10px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: flex; align-items: center;">
+                        <div style="flex-grow: 1; width: 14vw; font-size: 1em; color: #2c3e50;">Not available in any Pharmacy</div>
+                    </li> 
+                    {% endif %}
+                    </ul>
             </div>
         </div>
     </div>

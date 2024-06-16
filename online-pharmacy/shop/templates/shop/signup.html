@@ -5,269 +5,275 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
-<title>Bootstrap Sign up Form with Icons</title>
+<title>SignUp</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
-	body {
-    color: #fff;
-    background: #19aa8d;
-    font-family: 'Roboto', sans-serif;
-}
+    body {
+        color: #fff;
+        background: #19aa8d;
+        font-family: 'Roboto', sans-serif;
+    }
 
-.form-control, .form-control:focus, .input-group-addon {
-    border-color: #e1e1e1;
-}
+    .form-control, .form-control:focus, .input-group-addon {
+        border-color: #e1e1e1;
+    }
 
-.form-control, .btn {
-    border-radius: 5px;
-}
+    .form-control, .btn {
+        border-radius: 5px;
+    }
 
-.signup-form {
-    width: 500px;
-    margin: 0 auto;
-    padding: 30px 0;
-}
+    .signup-form {
+        width: 500px;
+        margin: 0 auto;
+        padding: 30px 0;
+    }
 
-.signup-form form {
-    color: #999;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    background: #fff;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    transition: all 0.3s ease;
-}
+    .signup-form form {
+        color: #999;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        background: #fff;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        transition: all 0.3s ease;
+    }
 
-.signup-form h2 {
-    color: #333;
-    font-weight: bold;
-    margin-top: 0;
-}
+    .signup-form h2 {
+        color: #333;
+        font-weight: bold;
+        margin-top: 0;
+    }
 
-.signup-form hr {
-    margin: 0 -40px 20px;
-}
+    .signup-form hr {
+        margin: 0 -40px 20px;
+    }
 
-.signup-form .form-group {
-    margin-bottom: 20px;
-}
+    .signup-form .form-group {
+        margin-bottom: 20px;
+    }
 
-.signup-form label {
-    font-weight: normal;
-    font-size: 13px;
-}
+    .signup-form label {
+        font-weight: normal;
+        font-size: 13px;
+    }
 
-.signup-form .form-control {
-    min-height: 38px;
-    box-shadow: none !important;
-    transition: border-color 0.3s ease;
-}
+    .signup-form .form-control {
+        min-height: 38px;
+        box-shadow: none !important;
+        transition: border-color 0.3s ease;
+    }
 
-.signup-form .input-group-addon {
-    max-width: 42px;
-    text-align: center;
-    background-color: #f7f7f7;
-}
+    .signup-form .input-group-addon {
+        max-width: 42px;
+        text-align: center;
+        background-color: #f7f7f7;
+    }
 
-.signup-form input[type="checkbox"] {
-    margin-top: 2px;
-}
+    .signup-form input[type="checkbox"] {
+        margin-top: 2px;
+    }
 
-.signup-form .btn {
-    font-size: 16px;
-    font-weight: bold;
-    background: #ff6f61;
-    border: none;
-    min-width: 140px;
-    transition: background-color 0.3s ease;
-}
+    .signup-form .btn {
+        font-size: 16px;
+        font-weight: bold;
+        background: #ff6f61;
+        border: none;
+        min-width: 140px;
+        transition: background-color 0.3s ease;
+    }
 
-.signup-form .btn:hover, .signup-form .btn:focus {
-    background: #e55e50;
-    outline: none;
-}
+    .signup-form .btn:hover, .signup-form .btn:focus {
+        background: #e55e50;
+        outline: none;
+    }
 
-.signup-form a {
-    color: #ff6f61;
-    transition: color 0.3s ease;
-}
+    .signup-form a {
+        color: #ff6f61;
+        transition: color 0.3s ease;
+    }
 
-.signup-form a:hover {
-    text-decoration: none;
-    color: #ff3f34;
-}
+    .signup-form a:hover {
+        text-decoration: none;
+        color: #ff3f34;
+    }
 
-.signup-form form a {
-    color: #ff6f61;
-    text-decoration: none;
-}
+    .signup-form form a {
+        color: #ff6f61;
+        text-decoration: none;
+    }
 
-.signup-form form a:hover {
-    text-decoration: underline;
-}
+    .signup-form form a:hover {
+        text-decoration: underline;
+    }
 
-.signup-form .fa {
-    font-size: 21px;
-}
+    .signup-form .fa {
+        font-size: 21px;
+    }
 
-.signup-form .fa-paper-plane {
-    font-size: 18px;
-}
+    .signup-form .fa-paper-plane {
+        font-size: 18px;
+    }
 
-.signup-form .fa-check {
-    color: #fff;
-    left: 17px;
-    top: 18px;
-    font-size: 7px;
-    position: absolute;
-}
+    .signup-form .fa-check {
+        color: #fff;
+        left: 17px;
+        top: 18px;
+        font-size: 7px;
+        position: absolute;
+    }
 
-.signup-form .role-btn-group {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
+    .signup-form .role-btn-group {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 20px;
+    }
 
-.signup-form .role-btn {
-    flex: 1;
-    margin: 0 5px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    padding: 10px 20px;
-    border: 2px solid #19aa8d;
-    color: #19aa8d;
-    background-color: #fff;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
+    .signup-form .role-btn {
+        flex: 1;
+        margin: 0 5px;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: 2px solid #19aa8d;
+        color: #19aa8d;
+        background-color: #fff;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
 
-.signup-form .role-btn.active {
-    background-color: #19aa8d;
-    color: #fff;
-}
+    .signup-form .role-btn.active {
+        background-color: #19aa8d;
+        color: #fff;
+    }
 
-.signup-form .role-text {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-    text-align: center;
-}
+    .signup-form .role-text {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 10px;
+        text-align: center;
+    }
 
-.signup-form .role-or {
-    margin: 0 10px;
-    font-weight: bold;
-    font-size: 14px;
-    color: #333;
-}
-.login-btn {
-    display: inline-block;
-    padding: 7.5px 15px;
-    margin-top: 10px;
-    background-color: #ff6f61;
-    color: #fff !important; 
-    border: 2px solid #ff6f61;
-    border-radius: 5px;
-    font-weight: bold;
-    text-decoration: none !important;
-    transition: background-color 0.3s, border-color 0.3s !important;
-}
+    .signup-form .role-or {
+        margin: 0 10px;
+        font-weight: bold;
+        font-size: 14px;
+        color: #333;
+    }
 
-.login-btn:hover {
-    background-color: #e55e50;
-    border-color: #e55e50;
-    color: #fff;
-    text-decoration: none;
-}
+    .login-btn {
+        display: inline-block;
+        padding: 7.5px 15px;
+        margin-top: 10px;
+        background-color: #ff6f61;
+        color: #fff !important;
+        border: 2px solid #ff6f61;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none !important;
+        transition: background-color 0.3s, border-color 0.3s !important;
+    }
+
+    .login-btn:hover {
+        background-color: #e55e50;
+        border-color: #e55e50;
+        color: #fff;
+        text-decoration: none;
+    }
 </style>
 </head>
 <body>
 
 <div class="signup-form">
-    <form id="signup-form" action="" method="POST">
-		{% csrf_token %}
-		<h2>Sign Up</h2>
-		<p>Please fill in this form to create an account!</p>
-		{{form.errors}}
-		<hr>
+    <form id="signup-form" action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Sign Up</h2>
+        <p>Please fill in this form to create an account!</p>
+        {{ form.errors }}
+        <hr>
         <div class="form-group">
-			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-user"></i></span>
-				{{form.username}}
-			</div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                {{ form.username }}
+            </div>
         </div>
         <div class="form-group">
-			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
-				{{form.email}}
-			</div>
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+                {{ form.email }}
+            </div>
         </div>
-		<div class="form-group">
-			<div class="input-group">
-				<span class="input-group-addon"><i class="fa fa-lock"></i></span>
-				{{form.password1}}
-			</div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                {{ form.password1 }}
+            </div>
         </div>
-		<div class="form-group">
-			<div class="input-group">
-				<span class="input-group-addon">
-					<i class="fa fa-lock"></i>
-					<i class="fa fa-check"></i>
-				</span>
-				{{form.password2}}
-			</div>
+        <div class="form-group">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-lock"></i>
+                    <i class="fa fa-check"></i>
+                </span>
+                {{ form.password2 }}
+            </div>
         </div>
-		<div class="form-group">
-			<div class="role-text">Kindly tell us if you are a</div>
-			<div class="role-btn-group">
-				<button type="button" class="role-btn" data-role="Customer">Customer</button>
-				<span class="role-or">or</span>
-				<button type="button" class="role-btn" data-role="Pharmacist">Pharmacist</button>
-			</div>
-			<input type="hidden" name="role" id="role" value="">
-		</div>
-		<div class="form-group">
+        <div class="form-group">
+            <label for="id_image">Profile Image</label>
+            {{ form.image }}
+        </div>
+        <div class="form-group">
+            <div class="role-text">Kindly tell us if you are a</div>
+            <div class="role-btn-group">
+                <button type="button" class="role-btn" data-role="Customer">Customer</button>
+                <span class="role-or">or</span>
+                <button type="button" class="role-btn" data-role="Pharmacist">Pharmacist</button>
+            </div>
+            <input type="hidden" name="role" id="role" value="">
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
         </div>
     </form>
-	<div class="text-center">Already have an account? <a class="login-btn" href="/shop/login">Login here</a></div>
+    <div class="text-center">Already have an account? <a class="login-btn" href="/shop/login">Login here</a></div>
 </div>
+
 <script>
-	// Query All input fields
-	var form_fields = document.getElementsByTagName('input');
-	form_fields[1].placeholder = 'Username..';
-	form_fields[2].placeholder = 'Email..';
-	form_fields[3].placeholder = 'Enter password...';
-	form_fields[4].placeholder = 'Re-enter Password...';
+    // Query All input fields
+    var form_fields = document.getElementsByTagName('input');
+    form_fields[1].placeholder = 'Username..';
+    form_fields[2].placeholder = 'Email..';
+    form_fields[3].placeholder = 'Enter password...';
+    form_fields[4].placeholder = 'Re-enter Password...';
 
-	for (var field in form_fields) {
-		form_fields[field].className += ' form-control';
-	}
+    for (var field in form_fields) {
+        form_fields[field].className += ' form-control';
+    }
 
-	// Role button logic
-	const roleButtons = document.querySelectorAll('.role-btn');
-	const roleField = document.querySelector('#role');
-	const signupForm = document.querySelector('#signup-form');
+    // Role button logic
+    const roleButtons = document.querySelectorAll('.role-btn');
+    const roleField = document.querySelector('#role');
+    const signupForm = document.querySelector('#signup-form');
 
-	roleButtons.forEach(button => {
-		button.addEventListener('click', function() {
-			roleButtons.forEach(btn => btn.classList.remove('active'));
-			this.classList.add('active');
-			roleField.value = this.getAttribute('data-role');
-		});
-	});
+    roleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            roleButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            roleField.value = this.getAttribute('data-role');
+        });
+    });
 
-	signupForm.addEventListener('submit', function(e) {
-		if (!roleField.value) {
-			e.preventDefault();
-			alert('Please select a role before signing up.');
-		}
-	});
+    signupForm.addEventListener('submit', function(e) {
+        if (!roleField.value) {
+            e.preventDefault();
+            alert('Please select a role before signing up.');
+        }
+    });
 </script>
 </body>
 </html>

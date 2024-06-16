@@ -21,17 +21,10 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['username', 'email']
 
 class UserProfileUpdateForm(forms.ModelForm):
-    GENDER_CHOICES = [
-        ('Male', 'Male'),
-        ('Female', 'Female'),
-        ('Others', 'Others'),
-    ]
-
-    gender = forms.ChoiceField(choices=GENDER_CHOICES)
 
     class Meta:
         model = UserProfile
-        fields = ['image', 'full_name', 'address', 'area','gender', 'contact_number']
+        fields = ['image', 'full_name', 'address', 'area', 'contact_number']
 
 class CreateUserForm(UserCreationForm):
     ROLE_CHOICES = [
@@ -39,10 +32,11 @@ class CreateUserForm(UserCreationForm):
         ('Pharmacist', 'Pharmacist'),
     ]
     role = forms.ChoiceField(choices=ROLE_CHOICES, required=True)
+    image = forms.ImageField(required=True)
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2', 'role']
+        fields = ['username', 'email', 'password1', 'password2', 'role', 'image']
 
 
 class ProductForm(forms.ModelForm):
