@@ -45,6 +45,7 @@
         justify-content: center;
         align-items: center;
         background-color: #fff;
+        border-radius: 10px;
     }
 
     .section img {
@@ -71,7 +72,7 @@
 <div  style="background: #f9f9f9; display: flex; justify-content: center;">
     <div class="row" style=" display: flex; background: #f9f9f9; width: 70%; border: 1px solid #acbdce; display: flex; justify-content: space-around; padding: 30px; border-radius: 10px;">
         <div class="section" >
-            <img src="/media/{{ product.image }}" class="img-fluid shadow" alt="{{ product.product_name }}" style="object-fit: contain;">
+            <img src="/media/{{ product.image }}" class="img-fluid shadow" alt="{{ product.product_name }}" style="object-fit: cover;">
         </div>
         <div class=" section" style="background-color: #f9f9f9; border-radius: 8px; padding: 16px; display: flex; align-items: flex-start; justify-content: flex-start;">
             <p style="font-size: 1.5em; font-weight: 500; color: #2c3e50; margin-bottom: 5px;">Category:  {{ product.category }}</p> 

@@ -190,6 +190,9 @@ def Logout(request):
 def about(request):
     return render(request, 'shop/about.html')
 
+def help(request):
+    return render(request, 'shop/help.html')
+
 def contact(request):
     return render(request, 'shop/contact.html')
 
