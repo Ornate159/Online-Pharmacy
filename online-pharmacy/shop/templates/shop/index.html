@@ -67,30 +67,62 @@
 
 
                     {% for i in product %}
-                        <div class="col-xs-3 col-sm-3 col-md-3">
-                            <div class="card align-items-center" style="width: 16.5rem;margin: 2px; border: 1px solid #f9f9f991; border-radius: 5px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); " >
-                                <img src='/media/{{i.image}}' class="card-img-top" alt="product" style="width: 15rem; height: 15rem; object-fit: contain; border: 1px solid rgb(226, 224, 224); border-radius: 4px; margin-top: 4px;">
-                                <div class="card-body">
-                                    <h4 class="card-title" style="color:#2c3e50; font-size: 22px; font-weight: 500;" id="namepr{{i.id}}">{{i.product_name}}</h4>
-                                    <p class="card-text"><b>Price: {{i.price}} BDT</b></p>
-                                    <span id="divpr{{i.id}}" class="divpr">
-                                        {% if user.is_authenticated %}
+                    <div class="col-xs-3 col-sm-3 col-md-3">
+                        <div class="card align-items-center" style="width: 16.5rem; margin: 2px; border: 1px solid #f9f9f991; border-radius: 5px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);">
+                            <img src='/media/{{ i.image }}' class="card-img-top" alt="product" style="width: 15rem; height: 15rem; object-fit: contain; border: 1px solid rgb(226, 224, 224); border-radius: 4px; margin-top: 4px;">
+                            <div class="card-body">
+                                <h4 class="card-title" style="color:#2c3e50; font-size: 22px; font-weight: 500;" id="namepr{{ i.id }}">{{ i.product_name }}</h4>
+                                <p class="card-text"><b>Price: {{ i.price }} BDT</b></p>
+                                <span id="divpr{{ i.id }}" class="divpr">
+                                    {% if user.is_authenticated %}
+                                        {% if role == 'Pharmacist' %}
+                                            <div class="d-flex flex-column align-items-start">
+                                                {% if user in i.available_pharmacies.all %}
+                                                    <form method="post" class="d-flex flex-column align-items-start w-100">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="product_id" value="{{ i.id }}">
+                                                        <p style="color: #506880; font-size: 0.8rem; font-weight: 300; margin: 2px;"><b>Current Status: Available</b></p>
+                                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                                            <button type="submit" name="not_available" class="btn btn-danger me-2" style="font-size: 14.5px; font-weight: lighter;">Not Available</button>
+                                                            <a href="/shop/product/{{i.id}}" class="btn btn-primary cart" data-category="{{ product.0.category }}" data-price="{{ i.price }}" style="font-size: 14.5px; font-weight: lighter;">View Product</a>
+                                                        </div>
+                                                    </form>
+                                                {% else %}
+                                                    <form method="post" class="d-flex flex-column align-items-start w-100">
+                                                        {% csrf_token %}
+                                                        <input type="hidden" name="product_id" value="{{ i.id }}">
+                                                        <p style="color: #506880; font-size: 0.8rem; font-weight: 300; margin: 2px;"><b>Current Status: Not Available</b></p>
+                                                        <div class="d-flex w-100 justify-content-between align-items-center">
+                                                            <button type="submit" name="available" class="btn btn-success me-2" style="font-size: 14.5px; font-weight: lighter;">Available</button>
+                                                            <a href="/shop/product/{{i.id}}" class="btn btn-primary cart" data-category="{{ product.0.category }}" data-price="{{ i.price }}" style="font-size: 14.5px; font-weight: lighter;">View Product</a>
+                                                        </div>
+                                                    </form>
+                                                {% endif %}
+                                            </div>
+                                        {% else %}
                                             <span id="divpr{{ i.id }}" class="divpr">
                                                 <button id="pr{{ i.id }}" class="btn btn-primary cart" data-category="{{ product.0.category }}" data-price="{{ i.price }}" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Add To Cart</button>
                                             </span>
-                                        {% else %}
-                                            <a href="/shop/login/"><button class="btn btn-primary" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Order Now</button></a>
+                                            
                                         {% endif %}
-                                    </span>
-                                    <a href="/shop/product/{{i.id}}"><button id="qv{{i.id}}" class="btn btn-primary cart" data-category="{{ product.0.category }}" data-price="{{ i.price }}" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</button></a>
-                                </div>
+                                    {% else %}
+                                        <a href="/shop/login/"><button class="btn btn-primary" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">Order Now</button></a>
+                                    {% endif %}
+                                </span>
+                                {% if role != 'Pharmacist' %}
+    <a href="/shop/product/{{i.id}}" class="btn btn-primary cart" data-category="{{ product.0.category }}" data-price="{{ i.price }}" style="width: 6.8rem; font-size: 14.5px; font-weight: lighter;">View Product</a>
+{% endif %}
                             </div>
+                            
                         </div>
-                        {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
                     </div>
-                    <div class="carousel-item">
-                        {% endif %}
-                    {% endfor %}
+                    
+{% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
+</div>
+<div class="carousel-item">
+{% endif %}
+{% endfor %}
+
             </div>
 
         </div>

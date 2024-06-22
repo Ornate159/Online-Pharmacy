@@ -21,6 +21,8 @@ from django.http import HttpResponse
 from .models import Product, UserProfile
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.db.models import Q
 
 def product_detail(request, product_id):
     product = get_object_or_404(Product, id=product_id)
@@ -30,13 +32,13 @@ def product_detail(request, product_id):
             if 'available' in request.POST:
                 if request.user not in product.available_pharmacies.all():
                     product.available_pharmacies.add(request.user)
-                    messages.success(request, 'Product marked as available.')
+                    
                 else:
                     messages.info(request, 'You are already marked as available for this product.')
             elif 'not_available' in request.POST:
                 if request.user in product.available_pharmacies.all():
                     product.available_pharmacies.remove(request.user)
-                    messages.success(request, 'Product marked as not available.')
+                    
                 else:
                     messages.info(request, 'You are already marked as not available for this product.')
             return redirect('product_detail', product_id=product.id)
@@ -169,20 +171,42 @@ def index(request):
             role = user_profile.role
         except ObjectDoesNotExist:
             pass
-    
+
     products = Product.objects.all()
     listAll = []
-    listCat = Product.objects.values('category', 'id')
+    listCat = Product.objects.values('category').distinct()
     allCat = {item['category'] for item in listCat}
     for cat in allCat:
-        item = Product.objects.filter(category=cat)
-        x = len(products)
+        items = Product.objects.filter(category=cat)
+        x = len(items)
         slideN = x // 4 + ceil((x / 4 - (x // 4)))
-        listAll.append([item, range(1, slideN), slideN])
+        listAll.append([items, range(1, slideN), slideN])
+
+    if request.method == "POST":
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            if 'available' in request.POST:
+                if request.user not in product.available_pharmacies.all():
+                    product.available_pharmacies.add(request.user)
+                    
+                else:
+                    messages.info(request, 'You are already marked as available for this product.')
+            elif 'not_available' in request.POST:
+                if request.user in product.available_pharmacies.all():
+                    product.available_pharmacies.remove(request.user)
+                    
+                else:
+                    messages.info(request, 'You are already marked as not available for this product.')
+
+            # Redirect after successful form submission to prevent refresh issues
+            return HttpResponseRedirect(request.path_info)
+
+        except Product.DoesNotExist:
+            messages.error(request, 'Product not found.')
 
     context = {'listAll': listAll, 'role': role, 'is_authenticated': request.user.is_authenticated}
     return render(request, 'shop/index.html', context)
-
 def Logout(request):
     logout(request)
     return redirect('/shop/login')
@@ -200,40 +224,156 @@ def payment(request):
     return render(request, 'shop/payment.html')
 
 def search(request):
-    products = Product.objects.all()
     keyword = request.GET.get('search')
     listAll = []
-    listCat = Product.objects.values('category', 'id')
+    listCat = Product.objects.values('category').distinct()
     allCat = {item['category'] for item in listCat}
-    for cat in allCat:
-        list = Product.objects.filter(category=cat)
-        result = [item for item in list if len(keyword) >= 1 and keyword.lower() in item.product_name.lower()]
 
-        x = len(products)
+    for cat in allCat:
+        items = Product.objects.filter(category=cat).filter(Q(product_name__icontains=keyword))
+        x = len(items)
         slideN = x // 4 + ceil((x / 4 - (x // 4)))
-        all = {'listAll': listAll}
-        listAll.append([result, range(1, slideN), slideN])
+        listAll.append([items, range(1, slideN), slideN])
+
     if len(listAll) == 0:
         return render(request, 'shop/nomatch.html')
-    else:
-        return render(request, 'shop/search.html', all)
+
+    if request.method == "POST" and request.user.is_authenticated:
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+
+            if 'available' in request.POST:
+                if request.user not in product.available_pharmacies.all():
+                    product.available_pharmacies.add(request.user)
+                    messages.success(request, 'Marked as available for this product.')
+                else:
+                    messages.info(request, 'You are already marked as available for this product.')
+
+            elif 'not_available' in request.POST:
+                if request.user in product.available_pharmacies.all():
+                    product.available_pharmacies.remove(request.user)
+                    messages.success(request, 'Marked as not available for this product.')
+                else:
+                    messages.info(request, 'You are already marked as not available for this product.')
+
+            # Redirect after successful form submission to prevent refresh issues
+            return HttpResponseRedirect(request.path_info)
+
+        except Product.DoesNotExist:
+            messages.error(request, 'Product not found.')
+
+    context = {'listAll': listAll, 'is_authenticated': request.user.is_authenticated}
+    return render(request, 'shop/search.html', context)
 
 def checkout(request):
     return render(request, 'shop/checkout.html')
 
 def otc(request):
+    role = None
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            role = user_profile.role
+        except ObjectDoesNotExist:
+            pass
+
     products = Product.objects.filter(category='OTC Medicines')
-    context = {'products': products}
+
+    if request.method == "POST":
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            if 'available' in request.POST:
+                if request.user not in product.available_pharmacies.all():
+                    product.available_pharmacies.add(request.user)
+                else:
+                    messages.info(request, 'You are already marked as available for this product.')
+            elif 'not_available' in request.POST:
+                if request.user in product.available_pharmacies.all():
+                    product.available_pharmacies.remove(request.user)
+                else:
+                    messages.info(request, 'You are already marked as not available for this product.')
+
+            # Redirect after successful form submission to prevent refresh issues
+            return HttpResponseRedirect(request.path_info)
+
+        except Product.DoesNotExist:
+            messages.error(request, 'Product not found.')
+
+    context = {'products': products, 'role': role, 'is_authenticated': request.user.is_authenticated}
     return render(request, 'shop/otc.html', context)
 
+
 def prescribed(request):
+    role = None
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            role = user_profile.role
+        except ObjectDoesNotExist:
+            pass
+
     products = Product.objects.filter(category='Prescribed Medicines')
-    context = {'products': products}
+
+    if request.method == "POST":
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            if 'available' in request.POST:
+                if request.user not in product.available_pharmacies.all():
+                    product.available_pharmacies.add(request.user)
+                else:
+                    messages.info(request, 'You are already marked as available for this product.')
+            elif 'not_available' in request.POST:
+                if request.user in product.available_pharmacies.all():
+                    product.available_pharmacies.remove(request.user)
+                else:
+                    messages.info(request, 'You are already marked as not available for this product.')
+
+            # Redirect after successful form submission to prevent refresh issues
+            return HttpResponseRedirect(request.path_info)
+
+        except Product.DoesNotExist:
+            messages.error(request, 'Product not found.')
+
+    context = {'products': products, 'role': role, 'is_authenticated': request.user.is_authenticated}
     return render(request, 'shop/prescribed.html', context)
 
+
 def healthcare(request):
+    role = None
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            role = user_profile.role
+        except ObjectDoesNotExist:
+            pass
+
     products = Product.objects.filter(category='Healthcare Products')
-    context = {'products': products}
+
+    if request.method == "POST":
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            if 'available' in request.POST:
+                if request.user not in product.available_pharmacies.all():
+                    product.available_pharmacies.add(request.user)
+                else:
+                    messages.info(request, 'You are already marked as available for this product.')
+            elif 'not_available' in request.POST:
+                if request.user in product.available_pharmacies.all():
+                    product.available_pharmacies.remove(request.user)
+                else:
+                    messages.info(request, 'You are already marked as not available for this product.')
+
+            # Redirect after successful form submission to prevent refresh issues
+            return HttpResponseRedirect(request.path_info)
+
+        except Product.DoesNotExist:
+            messages.error(request, 'Product not found.')
+
+    context = {'products': products, 'role': role, 'is_authenticated': request.user.is_authenticated}
     return render(request, 'shop/healthcare.html', context)
 
 def pharmacist(request):

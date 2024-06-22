@@ -1,0 +1,44 @@
+def index(request):
+    role = None
+    if request.user.is_authenticated:
+        try:
+            user_profile = UserProfile.objects.get(user=request.user)
+            role = user_profile.role
+        except ObjectDoesNotExist:
+            pass
+
+    products = Product.objects.all()
+    listAll = []
+    listCat = Product.objects.values('category').distinct()
+    allCat = {item['category'] for item in listCat}
+    for cat in allCat:
+        items = Product.objects.filter(category=cat)
+        x = len(items)
+        slideN = x // 4 + ceil((x / 4 - (x // 4)))
+        listAll.append([items, range(1, slideN), slideN])
+
+    if request.method == "POST":
+        product_id = request.POST.get('product_id')
+        try:
+            product = Product.objects.get(id=product_id)
+            if 'available' in request.POST:
+                if request.user not in product.available_pharmacies.all():
+                    product.available_pharmacies.add(request.user)
+                    
+                else:
+                    messages.info(request, 'You are already marked as available for this product.')
+            elif 'not_available' in request.POST:
+                if request.user in product.available_pharmacies.all():
+                    product.available_pharmacies.remove(request.user)
+                    
+                else:
+                    messages.info(request, 'You are already marked as not available for this product.')
+
+            # Redirect after successful form submission to prevent refresh issues
+            return HttpResponseRedirect(request.path_info)
+
+        except Product.DoesNotExist:
+            messages.error(request, 'Product not found.')
+
+    context = {'listAll': listAll, 'role': role, 'is_authenticated': request.user.is_authenticated}
+    return render(request, 'shop/index.html', context)
